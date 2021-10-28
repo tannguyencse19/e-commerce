@@ -1,7 +1,7 @@
 import Test from './components/Test';
 import { ChakraProvider } from "@chakra-ui/react"
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
+import Home from './views/Home/Home';
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,13 +13,13 @@ function App() {
   return (
     <ChakraProvider>
       <Router>
+        <Navbar></Navbar>
         <Switch>
           {/* <Route path="/about">
             <About />
           </Route> */}
           <Route path="/">
-            <Navbar></Navbar>
-            <Hero></Hero>
+            <Home></Home>
           </Route>
         </Switch>
       </Router>
