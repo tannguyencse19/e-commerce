@@ -28,10 +28,10 @@ const Navbar = () => {
         </ReactLink>
       </GridItem>
       <Grid autoFlow="column" minW="450px" justifyItems="end">
-        <GridItem _hover={{ color: "pink.500", cursor: "pointer" }}>
+        <GridItem _hover={{ color: "pink.400", cursor: "pointer" }}>
           <ReactLink to="/">Home</ReactLink>
         </GridItem>
-        <GridItem _hover={{ color: "pink.500", cursor: "pointer" }}>
+        <GridItem _hover={{ color: "pink.400", cursor: "pointer" }}>
           <ReactLink to="/category">Category</ReactLink>
         </GridItem>
         <GridItem>Latest</GridItem>

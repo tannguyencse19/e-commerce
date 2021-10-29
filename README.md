@@ -3,6 +3,8 @@ https://preview.colorlib.com/#estore
 - Homepage
     - Hero
     - Product List
+    - Latest Product
+        - Carousel
 - Product Detail
 
 1. Đã làm
