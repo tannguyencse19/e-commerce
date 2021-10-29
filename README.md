@@ -7,6 +7,8 @@ https://preview.colorlib.com/#estore
         - Carousel
 - Product Detail
 
+- Responsive
+
 1. Đã làm
     - Navbar
 
