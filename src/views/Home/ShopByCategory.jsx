@@ -1,4 +1,12 @@
-import { Container, Text, Grid, GridItem, Box, Button } from "@chakra-ui/react";
+import {
+  Container,
+  Text,
+  Grid,
+  GridItem,
+  Box,
+  Button,
+  Image,
+} from "@chakra-ui/react";
 
 const Category = [
   {
@@ -23,29 +31,21 @@ const Category = [
 
 const ShopByCategory = () => {
   return (
-    <Container maxW="container.xl" px={10} py={16}>
+    <Container maxW="container.xl" px="10" pt="64" pb="32">
       <Text
         fontFamily='"Playfair Display",serif'
-        fontSize="4xl"
+        fontSize="5xl"
         fontWeight="bold"
         textAlign="center"
         mb="10"
       >
         Shop by Category
       </Text>
-      <Grid autoFlow="column" gap={5} justifyContent="center">
+      <Grid autoFlow="column" gap={5} justifyContent="space-between">
         {Category &&
           Category.map((item) => (
-            <GridItem
-              backgroundImage={item.img}
-              backgroundSize="cover"
-              backgroundRepeat="no-repeat"
-              w="300px"
-              h="200px"
-              autoFlow="column"
-              position="relative"
-              key={item.img}
-            >
+            <GridItem position="relative" key={item.img}>
+              <Image src={item.img} />
               <Box position="absolute" top="15%" right="5%">
                 <Text
                   fontFamily={item.fontFamily}

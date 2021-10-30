@@ -14,4 +14,8 @@ https://preview.colorlib.com/#estore
 
 2. Chưa làm xong
 
+- Fixed Navbar
+
 3. Bug
+
+- Transition nhanh quá
