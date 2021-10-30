@@ -4,6 +4,8 @@ import {
   GridItem,
   Text,
   Slide,
+  Button,
+  ButtonGroup,
 } from "@chakra-ui/react";
 
 const Hero = () => {
@@ -22,7 +24,7 @@ const Hero = () => {
       <GridItem>
         <Slide
           direction="left"
-          style={{ position: "inherit", transition:"all 0.4s ease-out" }}
+          style={{ position: "inherit", transition: "all 0.4s ease-out" }}
           in
           unmountOnExit
         >
@@ -32,14 +34,14 @@ const Hero = () => {
       <GridItem>
         <Slide
           direction="right"
-          style={{ position: "inherit", transition:"all 0.4s ease-out" }}
+          style={{ position: "inherit", transition: "all 0.4s ease-out" }}
           in
           unmountOnExit
         >
           <Text
             fontSize="5xl"
             fontFamily='"Yellowtail", cursive'
-            color="#2577fd"
+            color="red"
           >
             60% Discount
           </Text>
@@ -63,6 +65,10 @@ const Hero = () => {
           >
             Best Cloth Collection By 2020!
           </Text>
+          <ButtonGroup size="lg" spacing="3" mt="5">
+            <Button colorScheme="messenger">Shop Now</Button>
+            <Button colorScheme="pink">Latest Products</Button>
+          </ButtonGroup>
         </Slide>
       </GridItem>
     </Grid>

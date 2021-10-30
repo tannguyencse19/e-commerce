@@ -44,7 +44,13 @@ const ShopByCategory = () => {
       <Grid autoFlow="column" gap={5} justifyContent="space-between">
         {Category &&
           Category.map((item) => (
-            <GridItem position="relative" key={item.img}>
+            <GridItem
+              position="relative"
+              key={item.img}
+              transform="scale(0.98)"
+              _hover={{ transform: "scale(1.04)", cursor: "pointer" }}
+              transitionDuration="0.3s"
+            >
               <Image src={item.img} />
               <Box position="absolute" top="15%" right="5%">
                 <Text

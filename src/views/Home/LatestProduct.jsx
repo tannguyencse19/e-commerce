@@ -60,7 +60,10 @@ const LatestProduct = () => {
                   direction="right"
                   in
                   unmountOnExit
-                  style={{ position: "inherit", transition:"all 0.2s ease-out" }}
+                  style={{
+                    position: "inherit",
+                    transition: "all 0.2s ease-out",
+                  }}
                 >
                   <Grid templateColumns="repeat(3, auto)" gap="10" my="20">
                     {category &&
@@ -70,6 +73,11 @@ const LatestProduct = () => {
                           justifyItems="center"
                           autoFlow="row"
                           gap={3}
+                          _hover={{
+                            transform: "scale(1.05)",
+                            cursor: "pointer",
+                          }}
+                          transitionDuration="0.3s"
                         >
                           <Image src={item.img} />
                           <Rating
