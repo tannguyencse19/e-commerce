@@ -7,6 +7,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import Carousel from "./utils/Carousel"
 
 function App() {
   // 2. Use at the root of your app
@@ -15,9 +16,9 @@ function App() {
       <Router>
         <Navbar></Navbar>
         <Switch>
-          {/* <Route path="/about">
-            <About />
-          </Route> */}
+          <Route path="/carousel">
+            <Carousel />
+          </Route>
           <Route path="/">
             <Home></Home>
           </Route>
