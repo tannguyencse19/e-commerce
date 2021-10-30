@@ -2,6 +2,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 // import Swiper core and required modules
 import SwiperCore, { Navigation, Pagination } from "swiper";
+import { Image } from "@chakra-ui/react";
 
 //https://stackoverflow.com/questions/69202975/module-not-found-cant-resolve-swiper-react
 //https://swiperjs.com/migration-guide
@@ -13,36 +14,102 @@ import "./Carousel.css";
 // install Swiper modules
 SwiperCore.use([Navigation, Pagination]);
 
-const menu = ["Slide 1", "Slide 2", "Slide 3"];
+const menu = ["All", "New", "Feature", "Offer"];
+const Products = [
+  {
+    title: "Short Jeans Caro",
+    price: "$60.00",
+    discount: "$39.99",
+    star: 5,
+    img: "https://preview.colorlib.com/theme/estore/assets/img/categori/xproduct1.png.pagespeed.ic.1xDh2tYQRf.webp",
+  },
+  {
+    title: "Green Unisex Sweater",
+    price: "$70.00",
+    discount: "$44.99",
+    star: 4,
+    img: "https://preview.colorlib.com/theme/estore/assets/img/categori/xproduct2.png.pagespeed.ic.eUEI6NamxP.webp",
+  },
+  {
+    title: "Yellow Cotton Silky",
+    price: "$60.00",
+    discount: "$34.99",
+    star: 5,
+    img: "https://preview.colorlib.com/theme/estore/assets/img/categori/xproduct3.png.pagespeed.ic.7lSBCQxjjP.webp",
+  },
+  {
+    title: "Men's Long Armwet",
+    price: "$85.00",
+    discount: "$39.99",
+    star: 4,
+    img: "https://preview.colorlib.com/theme/estore/assets/img/categori/xproduct4.png.pagespeed.ic.E_ANc_dSPj.webp",
+  },
+  {
+    title: "Bombay Jeans Camo",
+    price: "$60.00",
+    discount: "$29.99",
+    star: 5,
+    img: "https://preview.colorlib.com/theme/estore/assets/img/categori/xproduct5.png.pagespeed.ic.izexkyESWy.webp",
+  },
+  {
+    title: "Bright Jeans Cloak",
+    price: "$60.00",
+    discount: "$44.99",
+    star: 5,
+    img: "https://preview.colorlib.com/theme/estore/assets/img/categori/xproduct6.png.pagespeed.ic.kDamUyhwF-.webp",
+  },
+];
 
+// https://swiperjs.com/demos
 // https://codepen.io/ncer/pen/xpqemZ
 // https://codesandbox.io/s/k2kup?file=/src/styles.css
 const pagination = {
   clickable: true,
-  renderBullet: function (index, className) {
-    return '<span class="' + className + '">' + menu[index] + "</span>";
+  renderBullet: function (idx, className) {
+    return '<span class="' + className + '">' + menu[idx] + "</span>";
   },
 };
 
 const Carousel = () => {
   return (
     <Swiper
-      pagination={paginationca}
+      pagination={pagination}
       spaceBetween={50}
-      slidesPerView={1}
+      // grid={{fill: "column", rows: 2}}
+      slidesPerView={3} // or 'auto'
+      slidesPerColumn={2}
+      slidesPerGroup={3}
+      slidesPerColumnFill="row"
+      grabCursor={true}
       // onSlideChange={() => console.log('slide change')}
       // onSwiper={(swiper) => console.log(swiper)}
-      style={{height: "500px"}}
+      style={{ paddingTop: 100 }}
+      // simulateTouch={false}
     >
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
-      <SwiperSlide>Slide 5</SwiperSlide>
-      <SwiperSlide>Slide 6</SwiperSlide>
-      <SwiperSlide>Slide 7</SwiperSlide>
-      <SwiperSlide>Slide 8</SwiperSlide>
-      <SwiperSlide>Slide 9</SwiperSlide>
+      {Products &&
+        Products.map((item) => (
+          <SwiperSlide>
+            <Image src={item.img} />
+          </SwiperSlide>
+        ))}
+      {Products &&
+        Products.map((item) => (
+          <SwiperSlide>
+            <Image src={item.img} />
+          </SwiperSlide>
+        ))}
+      {Products &&
+        Products.map((item) => (
+          <SwiperSlide>
+            <Image src={item.img} />
+          </SwiperSlide>
+        ))}
+      {Products &&
+        Products.map((item) => (
+          <SwiperSlide>
+            <Image src={item.img} />
+          </SwiperSlide>
+        ))}
     </Swiper>
   );
 };

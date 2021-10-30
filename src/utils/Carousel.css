@@ -1,6 +1,6 @@
 .swiper-pagination {
 	position: absolute;
-	top: 10px;
+	top: 0px;
 	right: 10px;
 	width: auto !important;
 	left: auto !important;
@@ -8,16 +8,16 @@
 }
 
 .swiper-pagination-bullet {
-  padding: 5px 10px;
+  padding: 5px 15px;
   border-radius: 0;
   width: auto;
-  height: 30px;
+  height: 40px;
   text-align: center;
-  line-height: 30px;
-  font-size: 12px;
+  font-size: 20px;
   color: #000;
   opacity: 1;
-  background: rgba(0, 0, 0, 0.2);
+  background: white;
+  transition: all 0.2s ease;
 }
 
 .swiper-pagination-bullet-active {
