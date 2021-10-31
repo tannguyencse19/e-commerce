@@ -21,7 +21,7 @@ const Hero = () => {
       alignItems="center"
       justifyContent="center"
     >
-      <GridItem>
+      <GridItem display={{base: "none", lg:"inline"}}>
         <Slide
           direction="left"
           style={{ position: "inherit", transition: "all 0.4s ease-out" }}
@@ -31,7 +31,7 @@ const Hero = () => {
           <Image src="https://preview.colorlib.com/theme/estore/assets/img/hero/xhero_man.png.pagespeed.ic.cN86RxAvqq.webp" />
         </Slide>
       </GridItem>
-      <GridItem>
+      <GridItem py="10">
         <Slide
           direction="right"
           style={{ position: "inherit", transition: "all 0.4s ease-out" }}

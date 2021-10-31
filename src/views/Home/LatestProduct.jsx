@@ -18,24 +18,25 @@ const LatestProduct = () => {
     <Container maxW="container.xl" px={10} py={16}>
       <Tabs isLazy>
         <Grid
-          autoFlow="column"
+          autoFlow={{base: "row", lg:"column"}}
           alignItems="center"
           borderBottom="1px solid"
           borderBottomColor="gray.200"
           pb="5"
-          px="5"
+          px={{lg:"5"}}
+          gap="5"
         >
           <GridItem>
             <Text
               fontFamily='"Playfair Display",serif'
-              fontSize="5xl"
+              fontSize={{base: "4xl", lg:"5xl"}}
               fontWeight="700"
             >
               Latest Products
             </Text>
           </GridItem>
           <GridItem>
-            <TabList borderBottom="none" justifyContent="end">
+            <TabList borderBottom="none" justifyContent={{ lg:"end"}}>
               {Category &&
                 Category.map((name) => (
                   <Tab

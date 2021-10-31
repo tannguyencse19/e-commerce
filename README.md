@@ -10,14 +10,18 @@
 - Default Scrollbar
 - Discount label/badge: https://cssdeck.com/labs/discount-labels
 - Flash Sale
-    - Sấm sét + Đổi màu chữ
-    - Blinky: https://codepen.io/tan-n-nguyen/pen/dyzzByZ
-
-- Responsive
+  - Sấm sét + Đổi màu chữ
+  - Blinky: https://codepen.io/tan-n-nguyen/pen/dyzzByZ
 
 1. Đã làm
 
+- Navbar
+
+- Responsive
    - Navbar
+   - Homepage
+      - Hero
+      - ShopByCategory
 
 2. Chưa làm xong
 
@@ -26,3 +30,4 @@
 3. Bug
 
 - Transform scale glitch mờ ảnh
+- Drawer: Mobile bị bug

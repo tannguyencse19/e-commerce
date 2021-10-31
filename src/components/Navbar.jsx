@@ -4,53 +4,144 @@ import {
   Image,
   Button,
   IconButton,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { Link as ReactLink } from "react-router-dom";
+import { Link as ReactLink, NavLink } from "react-router-dom";
 // import Badge from '../utils/Badge';
+import * as React from "react";
+import { HamburgerIcon } from "@chakra-ui/icons";
+
+const NavMenu = [
+  { name: "Home", path: "/" },
+  { name: "Category", path: "/category" },
+  { name: "Latest", path: "/latest" },
+  { name: "Blog", path: "/blog" },
+  { name: "Contact", path: "/contact" },
+];
 
 const Navbar = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
+
   return (
     <Grid
       autoFlow="column dense"
       justifyContent="space-between"
-      alignItems="center"
       // pos="fixed"
       w="100%"
       py="5"
       px="10"
       backgroundColor="#fff"
+      alignItems="center"
     >
       <GridItem>
         <ReactLink to="/">
-        <Image src="data:image/webp;base64,UklGRuYBAABXRUJQVlA4TNkBAAAvZYAFEJdAkG1T6+Hd7gwCgRSnMMQCksRb/d8VEASQpDDD/mqHcIL+KLICQgw+yJJkJw6kNz2IhxCL8f1vK4Hd63dE/ycgp3P82Inn7zRV1fXzVZL8U+n2hys4v1stal0Cs+LUbET5slrUpmyGmdkN3E0lWK0WrT19klRuewbAQwsm9z0HRpIXGkmXlFvLn1J52N4wntZ80hgtnqp8wqI3dZzPBs/bQWEk5Yj1CVucgeESsJwCvRdnvV+AMLTRAq5dLDCS1EvScFxPthnoTgB0VVUBUN2CH8ENIBVnJ8V6z5kkiwDAcPbedDoTDo/UdfjL8WBkAFiuwYvje7kwLG3lF+jvQALZVITT1R4G+aykGADEApJlPcqBBAjuzYi6O5cHOF+9BGR/guAOcpA2VzScjVN8BoB0mWMCYCfqZnAH+cnlOt58NnvvXQBMNwE0N4LmigDI1VU8EadBLaWUBnz4jWyBSZINwNoNV/q1gNuxzDWV/nqESpJNkDr9jY9//n9wCIhjHVNdArAcSQNg7lDzs9uRhWHFe5huq/D1JOtRSXiGEcSaPgPjoEqQ9ADZDmrCG5gHlvEpkK4kSx3YT9MNsFpgF+JHSL2Q1HbBb/C2CD4zJ8Hn5pTxFAA=" />
+          <Image src="data:image/webp;base64,UklGRuYBAABXRUJQVlA4TNkBAAAvZYAFEJdAkG1T6+Hd7gwCgRSnMMQCksRb/d8VEASQpDDD/mqHcIL+KLICQgw+yJJkJw6kNz2IhxCL8f1vK4Hd63dE/ycgp3P82Inn7zRV1fXzVZL8U+n2hys4v1stal0Cs+LUbET5slrUpmyGmdkN3E0lWK0WrT19klRuewbAQwsm9z0HRpIXGkmXlFvLn1J52N4wntZ80hgtnqp8wqI3dZzPBs/bQWEk5Yj1CVucgeESsJwCvRdnvV+AMLTRAq5dLDCS1EvScFxPthnoTgB0VVUBUN2CH8ENIBVnJ8V6z5kkiwDAcPbedDoTDo/UdfjL8WBkAFiuwYvje7kwLG3lF+jvQALZVITT1R4G+aykGADEApJlPcqBBAjuzYi6O5cHOF+9BGR/guAOcpA2VzScjVN8BoB0mWMCYCfqZnAH+cnlOt58NnvvXQBMNwE0N4LmigDI1VU8EadBLaWUBnz4jWyBSZINwNoNV/q1gNuxzDWV/nqESpJNkDr9jY9//n9wCIhjHVNdArAcSQNg7lDzs9uRhWHFe5huq/D1JOtRSXiGEcSaPgPjoEqQ9ADZDmrCG5gHlvEpkK4kSx3YT9MNsFpgF+JHSL2Q1HbBb/C2CD4zJ8Hn5pTxFAA=" />
         </ReactLink>
       </GridItem>
-      <Grid autoFlow="column" minW="450px" justifyItems="end">
-        <GridItem _hover={{ color: "pink.400", cursor: "pointer" }}>
-          <ReactLink to="/">Home</ReactLink>
+
+      <Grid
+        autoFlow="column"
+        display={{ base: "none", md: "grid" }}
+        justifyItems="end"
+        gap="5"
+        alignItems="center"
+      >
+        {NavMenu &&
+          NavMenu.map((item) => (
+            <GridItem
+              _hover={{ color: "pink.400", cursor: "pointer" }}
+              transitionDuration="0.4s"
+              fontSize="large"
+            >
+              <NavLink
+                exact
+                to={item.path}
+                activeStyle={{ color: "var(--chakra-colors-pink-400)" }}
+              >
+                {item.name}
+              </NavLink>
+            </GridItem>
+          ))}
+        <GridItem>
+          <IconButton
+            variant="outline"
+            isRound
+            icon={<FontAwesomeIcon icon={faShoppingCart} />}
+            size="lg"
+          />
+          {/* <Badge counterProp={2} iconProp={faShoppingCart} /> */}
         </GridItem>
-        <GridItem _hover={{ color: "pink.400", cursor: "pointer" }}>
-          <ReactLink to="/category">Category</ReactLink>
+        <GridItem>
+          <Button borderRadius="40px" colorScheme="blue">
+            Sign In
+          </Button>
         </GridItem>
-        <GridItem>Latest</GridItem>
-        <GridItem>Blog</GridItem>
-        <GridItem>Pages</GridItem>
-        <GridItem>Contact</GridItem>
       </Grid>
-      <Grid autoFlow="column" gap={5} alignItems="center">
+
+      <GridItem display={{ md: "none" }}>
         <IconButton
+          ref={btnRef}
+          onClick={onOpen}
+          icon={<HamburgerIcon boxSize="24px" />}
+          aria-label="hamburger"
           variant="outline"
-          isRound
-          icon={<FontAwesomeIcon icon={faShoppingCart} />}
-          size="lg"
+          // colorScheme="messenger"
         />
-        {/* <Badge counterProp={2} iconProp={faShoppingCart} /> */}
-        <Button borderRadius="40px" colorScheme="blue">
-          Sign In
-        </Button>
-      </Grid>
+      </GridItem>
+
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+        finalFocusRef={btnRef}
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Hi, Tan!</DrawerHeader>
+
+          <DrawerBody p="0" mt="5">
+            {NavMenu &&
+              NavMenu.map((item) => (
+                <NavLink
+                  exact
+                  to={item.path}
+                  style={{ display: "block", padding: "20px 20px" }}
+                  activeStyle={{
+                    backgroundColor: "#7483e8",
+                    color: "white",
+                  }}
+                  onClick={onClose}
+                >
+                  {item.name}
+                </NavLink>
+              ))}
+          </DrawerBody>
+
+          <DrawerFooter>
+            <IconButton
+              variant="outline"
+              isRound
+              icon={<FontAwesomeIcon icon={faShoppingCart} />}
+              size="lg"
+            />
+            {/* <Badge counterProp={2} iconProp={faShoppingCart} /> */}
+            <Button borderRadius="40px" colorScheme="blue">
+              Sign In
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </Grid>
   );
 };

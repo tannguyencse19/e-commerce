@@ -31,17 +31,17 @@ const Category = [
 
 const ShopByCategory = () => {
   return (
-    <Container maxW="container.xl" px="10" pt="64" pb="32">
+    <Container maxW="container.xl" px={{base: "0", md:"10"}} py={{base: "16", md:"32"}}>
       <Text
         fontFamily='"Playfair Display",serif'
-        fontSize="5xl"
+        fontSize={{base: "4xl", md:"5xl"}}
         fontWeight="bold"
         textAlign="center"
         mb="10"
       >
         Shop by Category
       </Text>
-      <Grid autoFlow="column" gap={5} justifyContent="space-between">
+      <Grid autoFlow={{base: "row", lg:"column"}} gap={5} justifyContent={{base: "space-around", lg:"space-between"}}>
         {Category &&
           Category.map((item) => (
             <GridItem
