@@ -15,6 +15,8 @@
 
 - Dark mode: https://chakra-ui.com/docs/features/color-mode
 
+- Mỗi khi code thì phải nhớ code thiên về Abstract chứ ko phải giải quyết 1 vấn đề, nhưng làm thì vẫn xuất phát từ 1 vấn đề rồi mới Abstract
+
 1. Đã làm
 
 - Navbar
@@ -28,6 +30,10 @@
 2. Chưa làm xong
 
 - Fixed Navbar
+- Latest Product:
+  - Mobile:
+    - Carousel Drag and drop chứ ko phải click: Nghiên cứu framework (nhẹ: Swiper, mạnh framer-motion)
+    - Hoặc Fade
 
 3. Bug
 
