@@ -13,15 +13,17 @@
   - Sấm sét + Đổi màu chữ
   - Blinky: https://codepen.io/tan-n-nguyen/pen/dyzzByZ
 
+- Dark mode: https://chakra-ui.com/docs/features/color-mode
+
 1. Đã làm
 
 - Navbar
 
 - Responsive
-   - Navbar
-   - Homepage
-      - Hero
-      - ShopByCategory
+  - Navbar
+  - Homepage
+    - Hero
+    - ShopByCategory
 
 2. Chưa làm xong
 

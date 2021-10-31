@@ -66,7 +66,7 @@ const LatestProduct = () => {
                     transition: "all 0.2s ease-out",
                   }}
                 >
-                  <Grid templateColumns="repeat(3, auto)" gap="10" my="20">
+                  <Grid templateColumns={{base: "", md: "repeat(3, auto)"}} gap="10" my="20">
                     {category &&
                       category.map((item) => (
                         <Grid
