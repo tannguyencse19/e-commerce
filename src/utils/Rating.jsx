@@ -3,7 +3,7 @@ import { Box, Icon, Stack, Text } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 
 const Rating = React.forwardRef(
-  ({ size, icon, scale, fillColor, strokeColor, ratingProp }, ref) => {
+  ({ size, scale, fillColor, strokeColor, ratingProp }, ref) => {
     // const [rating, setRating] = useState(0);
     const buttons = [];
 
@@ -43,8 +43,8 @@ const Rating = React.forwardRef(
     }
 
     return (
-      <Stack isInline justify="center">
-        <input name="rating" type="hidden" value={ratingProp} ref={ref} />
+      <Stack isInline>
+        {/* <input name="rating" type="hidden" value={ratingProp} ref={ref} /> */}
         {buttons}
       </Stack>
     );

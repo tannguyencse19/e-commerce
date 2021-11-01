@@ -18,7 +18,7 @@ const Category = [
   { name: "Trending", path: "/category?trend" },
   { name: "New", path: "/latest" },
   { name: "Featured", path: "/category?featured" },
-  { name: "Offer", path: "/latest?offer" },
+  { name: "Sale", path: "/category?sale" },
 ];
 
 const LatestProduct = () => {
