@@ -57,11 +57,12 @@ const Navbar = () => {
         alignItems="center"
       >
         {NavMenu &&
-          NavMenu.map((item) => (
+          NavMenu.map((item, idx) => (
             <GridItem
               _hover={{ color: "pink.400", cursor: "pointer" }}
               transitionDuration="0.4s"
               fontSize="large"
+              key={`nav-link-${idx}`}
             >
               <NavLink
                 exact
@@ -112,7 +113,7 @@ const Navbar = () => {
 
           <DrawerBody p="0" mt="5">
             {NavMenu &&
-              NavMenu.map((item) => (
+              NavMenu.map((item, idx) => (
                 <NavLink
                   exact
                   to={item.path}
@@ -122,6 +123,7 @@ const Navbar = () => {
                     color: "white",
                   }}
                   onClick={onClose}
+                  key={`nav-link-${idx}`}
                 >
                   {item.name}
                 </NavLink>
