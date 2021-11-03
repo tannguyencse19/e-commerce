@@ -10,6 +10,7 @@ import {
 import Category from './views/Category/Category';
 import Pagination from './utils/Pagination';
 import PaginationChoc from './utils/PaginationChoc';
+import MyPagination from './utils/MyPagination';
 
 function App() {
   // 2. Use at the root of your app
@@ -21,6 +22,7 @@ function App() {
           <Route path="/pagination">
             <Pagination itemsPerPage={4} />
             <PaginationChoc></PaginationChoc>
+            <MyPagination></MyPagination>
           </Route>
           <Route path="/category">
             <Category />
