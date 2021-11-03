@@ -7,13 +7,46 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
+import React from "react";
 
 const inputStyle = {
   borderRadius: "20px",
   variant: "filled",
 };
 
-const Filter = () => {
+// const Category = [
+//   { value: "shirt", title: "Shirt" },
+//   { value: "pants", title: "Pants" },
+//   { value: "accessories", title: "Accessories" },
+//   { value: "glass", title: "Glass" },
+// ];
+
+const CategoryValue = ["shirt", "pants", "accessories", "glass"];
+
+const Collection = [
+  { value: "halloween", title: "2021 Halloween Edition" },
+  { value: "trending", title: "Top Trending" },
+  { value: "newest", title: "Newest" },
+];
+
+const Filter = ({ onSelectCategory, onSelectCollection }) => {
+  const [Category, setCategory] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch("https://fakestoreapi.com/products/categories")
+      .then((res) => res.json())
+      .then((json) => {
+        const result = json.map((category, idx) => {
+          return {
+            // value: CategoryValue[idx],
+            value: category,
+            title: category,
+          };
+        });
+        setCategory(result);
+      });
+  }, []);
+
   return (
     <Grid gap="5">
       <GridItem>
@@ -23,19 +56,23 @@ const Filter = () => {
         </InputGroup>
       </GridItem>
       <GridItem>
-        <Select placeholder="Category" {...inputStyle}>
-          <option value="Shirt">Shirt</option>
-          <option value="Pants">Pants</option>
-          <option value="Accessories">Accessories</option>
-          <option value="Glass">Glass</option>
+        <Select placeholder="Category" {...inputStyle} onChange={onSelectCategory}>
+          {Category &&
+            Category.map((option) => (
+              <option value={option.value} key={option.value}>
+                {option.title}
+              </option>
+            ))}
         </Select>
       </GridItem>
       <GridItem>
         <Select placeholder="Collection" {...inputStyle}>
-          <option value="halloween">2021 Halloween Edition</option>
-          <option value="trending">Top Trending</option>
-          <option value="newest">Newest</option>
-          <option value="all">All</option>
+          {Collection &&
+            Collection.map((option) => (
+              <option value={option.value} key={option.value}>
+                {option.title}
+              </option>
+            ))}
         </Select>
       </GridItem>
     </Grid>

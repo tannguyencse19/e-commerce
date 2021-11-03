@@ -1,12 +1,6 @@
 0. Những thứ cần làm
    https://preview.colorlib.com/#estore
 
-- Homepage
-  - Hero
-  - Product List
-  - Latest Product
-    - Carousel
-- Product Detail
 - Default Scrollbar
 - Discount label/badge: https://cssdeck.com/labs/discount-labels
 - Flash Sale
@@ -28,6 +22,7 @@
 - Navbar Dropdown
 - Footer
 - Ranking: Hover hiện lên modal giống amazon
+- Fake API
 
 1. Đã làm
 
@@ -40,18 +35,21 @@
     - Hero
     - ShopByCategory
 
-- Product List (Category) views
-
-- Fake API
-
 2. Chưa làm xong
 
 - Fixed Navbar
 
 - Latest Product:
+
   - Mobile:
     - Carousel Drag and drop chứ ko phải click: Nghiên cứu framework (nhẹ: Swiper, mạnh framer-motion)
     - Hoặc Fade
+
+- Product List (Category) views
+  - Filter
+    - Select component
+    - Search
+  - Pagination
 
 3. Bug
 
