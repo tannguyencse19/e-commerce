@@ -29,7 +29,7 @@ const Collection = [
   { value: "newest", title: "Newest" },
 ];
 
-const Filter = ({ onSelectCategory, onSelectCollection }) => {
+const Filter = ({ onSelectCategory, onSelectCollection, onSearch }) => {
   const [Category, setCategory] = React.useState([]);
 
   React.useEffect(() => {
@@ -43,6 +43,7 @@ const Filter = ({ onSelectCategory, onSelectCollection }) => {
             title: category,
           };
         });
+        result.push({value: "", title: "All"});
         setCategory(result);
       });
   }, []);
@@ -51,7 +52,7 @@ const Filter = ({ onSelectCategory, onSelectCollection }) => {
     <Grid gap="5">
       <GridItem>
         <InputGroup>
-          <Input placeholder="black hoodie 2021 edition" {...inputStyle} />
+          <Input placeholder="black hoodie 2021 edition" {...inputStyle} onChange={onSearch} />
           <InputRightElement children={<SearchIcon />} />
         </InputGroup>
       </GridItem>

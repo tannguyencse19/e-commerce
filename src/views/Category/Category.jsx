@@ -4,18 +4,22 @@ import Result from "./Result";
 import React from "react";
 import { Spinner } from "@chakra-ui/spinner";
 
+const URI = "https://fakestoreapi.com/products";
+
 const Category = () => {
   const [Products, setProducts] = React.useState([]);
-  const [Category, setCategory] = React.useState("electronics");
-  const flagMounted = React.useRef(false); // La useState nhung ko trigger re-render
+  const [FilterResult, setFilterResult] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isError, setIsError] = React.useState(false);
+  const [Category, setCategory] = React.useState("");
 
-  function fetchAllProduct() {
-    fetch("https://fakestoreapi.com/products")
+  function fetchProducts(link) {
+    console.log(link);
+    fetch(link)
       .then((res) => res.json())
       .then((json) => {
         setProducts(json);
+        setFilterResult(json);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -25,34 +29,25 @@ const Category = () => {
       });
   }
 
-  const onSelectCategory = React.useCallback((e) => {
-    setCategory(e.target.value);
-  }, []);
-
   const handleFetchFilterCategory = React.useCallback(() => {
-    fetch(`https://fakestoreapi2.com/products/category/${Category}`)
-      .then((res) => res.json())
-      .then((json) => {
-        setProducts(json);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsError(true);
-        setIsLoading(false);
-        throw err;
-      });
+    console.log("handleFetchFilterCategory");
+    setIsLoading(true);
+    if (!Category) fetchProducts(URI);
+    else fetchProducts(`${URI}/category/${Category}`);
   }, [Category]);
 
-  React.useEffect(() => {
-    // First render
-    if (!flagMounted.current) {
-      fetchAllProduct();
+  function onSearch({ target: { value } }) {
+    if (!value) setFilterResult(Products);
+    else
+      setFilterResult(
+        Products.filter(
+          ({ title }) => title.toLowerCase().indexOf(value.toLowerCase()) > -1
+        )
+      );
+  }
 
-      flagMounted.current = true;
-    } else {
-      setIsLoading(true);
-      handleFetchFilterCategory();
-    }
+  React.useEffect(() => {
+    handleFetchFilterCategory();
   }, [handleFetchFilterCategory]);
 
   return (
@@ -63,7 +58,10 @@ const Category = () => {
         templateColumns={{ md: "25% auto" }}
       >
         <GridItem>
-          <Filter onSelectCategory={onSelectCategory} />
+          <Filter
+            onSelectCategory={(e) => setCategory(e.target.value)}
+            onSearch={onSearch}
+          />
         </GridItem>
         <GridItem>
           {isError && <h1>Uh oh... There is something wrong</h1>}
@@ -76,7 +74,7 @@ const Category = () => {
               size="xl"
             />
           )}
-          {!isLoading && <Result Products={Products} />}
+          {!isLoading && <Result Products={FilterResult} />}
         </GridItem>
       </Grid>
     </Container>
