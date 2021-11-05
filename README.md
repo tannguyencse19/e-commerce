@@ -55,3 +55,8 @@
 
 - Transform scale glitch mờ ảnh
 - Drawer: Mobile bị bug
+- Pagination chuyen trang cham
+  - Do ban so sanh key!
+  - Nhung ko co key thi bao loi...
+  - https://stackoverflow.com/questions/39549424/how-to-create-unique-keys-for-react-elements
+
