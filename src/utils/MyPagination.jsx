@@ -32,7 +32,7 @@ function Items({ currentItems }) {
 
 const MyPagination = ({ itemsPerPage }) => {
   const [currentItems, setCurrentItems] = React.useState(null);
-  const [pageCount, setPageCount] = React.useState(0);
+  const [lastPage, setLastPage] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(0);
   const [startOffset, setStartOffSet] = React.useState(0);
 
@@ -40,14 +40,12 @@ const MyPagination = ({ itemsPerPage }) => {
     const endOffset = startOffset + itemsPerPage;
     console.log(`Loading items from ${startOffset} to ${endOffset}`);
     setCurrentItems(items.slice(startOffset, endOffset));
-    setPageCount(Math.ceil(items.length / itemsPerPage));
+    setLastPage(Math.ceil(items.length / itemsPerPage));
   }, [startOffset, itemsPerPage]);
 
   const handlePageClick = React.useCallback(({ target }) => {
-    // let value = parseInt(target.getAttribute("value"));
-    let value = target.getAttribute("value");
-    if (value < 0) value = 0;
-    else if (value >= pageCount) value = pageCount - 1;
+    let value = parseInt(target.getAttribute("value"));
+    if (isNaN(value)) value = currentPage;
 
     setCurrentPage(value);
     const newOffset = (value * itemsPerPage) % items.length;
@@ -69,7 +67,7 @@ const MyPagination = ({ itemsPerPage }) => {
         <PageButton
           currentPage={currentPage}
           handlePageClick={handlePageClick}
-          lastPage={pageCount}
+          lastPage={lastPage}
         />
 
         <Select placeholder="10/Page">
@@ -80,7 +78,7 @@ const MyPagination = ({ itemsPerPage }) => {
           ))}
         </Select>
         <Text>Go to:</Text>
-        <NumberInput max={pageCount} min={0} maxW="20" variant="filled">
+        <NumberInput max={lastPage} min={0} maxW="20" variant="filled">
           <NumberInputField />
         </NumberInput>
       </Grid>
@@ -89,13 +87,14 @@ const MyPagination = ({ itemsPerPage }) => {
 };
 
 const PageButton = ({ currentPage, lastPage, handlePageClick }) => {
-  let render = [];
+  const render = [];
   let startIdx = 0;
 
+  const prevPage = currentPage - 1 >= 0 ? currentPage - 1 : 0;
   render.push(
     <IconButton
       icon={<ChevronLeftIcon />}
-      value={currentPage - 1}
+      value={prevPage}
       onClick={handlePageClick}
     />
   );
@@ -123,10 +122,11 @@ const PageButton = ({ currentPage, lastPage, handlePageClick }) => {
     );
   }
 
+  const nextPage = currentPage + 1 < lastPage ? currentPage + 1 : lastPage - 1;
   render.push(
     <IconButton
       icon={<ChevronRightIcon />}
-      value={currentPage + 1}
+      value={nextPage}
       onClick={handlePageClick}
     />
   );
