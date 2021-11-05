@@ -44,15 +44,16 @@ const MyPagination = ({ itemsPerPage }) => {
   }, [startOffset, itemsPerPage]);
 
   const handlePageClick = React.useCallback(({ target }) => {
-    let value = parseInt(target.getAttribute("value"));
-    if (isNaN(value)) value = currentPage;
-
-    setCurrentPage(value);
-    const newOffset = (value * itemsPerPage) % items.length;
-    console.log(
-      `User requested page number ${value}, which is offset ${newOffset}`
-    );
-    setStartOffSet(newOffset);
+    const value = parseInt(target.getAttribute("value"));
+    // console.log(`page request: ${value}, current page: ${currentPage}`);
+    if (!isNaN(value) && value >= 0 && value < lastPage) {
+      setCurrentPage(value);
+      const newOffset = (value * itemsPerPage) % items.length;
+      console.log(
+        `User requested page number ${value}, which is offset ${newOffset}`
+      );
+      setStartOffSet(newOffset);
+    }
   }, []);
 
   return (
@@ -88,22 +89,34 @@ const MyPagination = ({ itemsPerPage }) => {
 
 const PageButton = ({ currentPage, lastPage, handlePageClick }) => {
   const render = [];
-  let startIdx = 0;
 
-  const prevPage = currentPage - 1 >= 0 ? currentPage - 1 : 0;
-  render.push(
-    <IconButton
-      icon={<ChevronLeftIcon />}
-      value={prevPage}
-      onClick={handlePageClick}
-    />
-  );
+  if (currentPage - 1 >= 0) {
+    const prevPage = currentPage - 1;
+    render.push(
+      <IconButton
+        icon={<ChevronLeftIcon />}
+        value={prevPage}
+        onClick={handlePageClick}
+        key="prev-page"
+      />
+    );
+  }
 
-  if (currentPage - 1 >= 0) startIdx = currentPage - 1;
-  if (currentPage - 2 >= lastPage - 5) startIdx = lastPage - 5;
+  let startIdx;
+  let endIdx;
+  if (currentPage - 1 >= 0) {
+    startIdx = currentPage - 1;
+    endIdx = startIdx + 5
+  } else {
+    startIdx = 0;
+    endIdx = 5;
+  }
+  if (currentPage + 3 >= lastPage) {
+    startIdx = lastPage - 5;
+    endIdx = lastPage;
+  }
 
-  for (let idx = startIdx; idx < startIdx + 5 && idx < lastPage; idx++) {
-    //offset by 1
+  for (let idx = startIdx; idx < endIdx; idx++) {
     const offset = idx + 1;
     render.push(
       <Button key={idx} onClick={handlePageClick} value={idx}>
@@ -111,25 +124,30 @@ const PageButton = ({ currentPage, lastPage, handlePageClick }) => {
       </Button>
     );
   }
-  if (startIdx + 5 < lastPage) {
+
+  if (endIdx < lastPage) {
+    const offset = lastPage - 1;
     render.push(
       <>
         <FontAwesomeIcon icon={faEllipsisH} color="gray" />
-        <Button onClick={handlePageClick} value={lastPage - 1}>
+        <Button onClick={handlePageClick} value={offset} key="last-page">
           {lastPage}
         </Button>
       </>
     );
   }
 
-  const nextPage = currentPage + 1 < lastPage ? currentPage + 1 : lastPage - 1;
-  render.push(
-    <IconButton
-      icon={<ChevronRightIcon />}
-      value={nextPage}
-      onClick={handlePageClick}
-    />
-  );
+  if (currentPage + 1 < lastPage) {
+    const nextPage = currentPage + 1;
+    render.push(
+      <IconButton
+        icon={<ChevronRightIcon />}
+        value={nextPage}
+        onClick={handlePageClick}
+        key="next-page"
+      />
+    );
+  }
   return render;
 };
 
