@@ -41,8 +41,9 @@ const MyPagination = ({ itemsPerPage }) => {
     setLastPage(Math.ceil(items.length / itemsPerPage));
   }, [startOffset, itemsPerPage]);
 
-  const handlePageClick = React.useCallback(({ target }) => {
-    const value = parseInt(target.getAttribute("value"));
+  const handlePageClick = (e) => {
+    e.persist();
+    const value = parseInt(e.target.getAttribute("value"));
     // console.log(`page request: ${value}, current page: ${currentPage}`);
     if (!isNaN(value) && value >= 0 && value < lastPage) {
       setCurrentPage(value);
@@ -51,8 +52,10 @@ const MyPagination = ({ itemsPerPage }) => {
         `User requested page number ${value}, which is offset ${newOffset}`
       );
       setStartOffSet(newOffset);
+    } else {
+      console.log(`target.value: ${e.target.getAttribute("value")}`);
     }
-  }, []);
+  };
 
   return (
     <>
@@ -120,7 +123,7 @@ const PageButton = ({ currentPage, lastPage, handlePageClick }) => {
         key={`page-${offset}`}
         onClick={handlePageClick}
         value={idx}
-        colorScheme={idx === currentPage ? "yellow" : "gray"}
+        colorScheme={idx === currentPage ? "messenger" : "gray"}
       >
         {offset}
       </Button>
