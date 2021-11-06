@@ -41,8 +41,8 @@ const MyPagination = ({ itemsPerPage }) => {
     setLastPage(Math.ceil(items.length / itemsPerPage));
   }, [startOffset, itemsPerPage]);
 
-  const handlePageClick = (e) => {
-    e.persist();
+  const handlePageClick = (e, page) => {
+    console.log(page);
     const value = parseInt(e.target.getAttribute("value"));
     // console.log(`page request: ${value}, current page: ${currentPage}`);
     if (!isNaN(value) && value >= 0 && value < lastPage) {
@@ -53,7 +53,7 @@ const MyPagination = ({ itemsPerPage }) => {
       );
       setStartOffSet(newOffset);
     } else {
-      console.log(`target.value: ${e.target.getAttribute("value")}`);
+      // console.log(`target.value: ${e.target.getAttribute("value")}`);
     }
   };
 
@@ -95,8 +95,8 @@ const PageButton = ({ currentPage, lastPage, handlePageClick }) => {
     render.push(
       <IconButton
         icon={<ChevronLeftIcon />}
-        value={prevPage}
-        onClick={handlePageClick}
+        // value={prevPage}
+        onClick={(e) => handlePageClick(e, prevPage)}
         key={`prev-page-${prevPage}`}
       />
     );
