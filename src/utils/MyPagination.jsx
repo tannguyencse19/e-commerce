@@ -21,10 +21,8 @@ function Items({ currentItems }) {
   return (
     <>
       {currentItems &&
-        currentItems.map((item) => (
-          <div>
-            <h3>Item #{item}</h3>
-          </div>
+        currentItems.map((item, idx) => (
+          <h3 key={`item-${idx}`}>Item #{item}</h3>
         ))}
     </>
   );
@@ -45,7 +43,7 @@ const MyPagination = ({ itemsPerPage }) => {
 
   const handlePageClick = React.useCallback(({ target }) => {
     const value = parseInt(target.getAttribute("value"));
-    console.log(`page request: ${value}, current page: ${currentPage}`);
+    // console.log(`page request: ${value}, current page: ${currentPage}`);
     if (!isNaN(value) && value >= 0 && value < lastPage) {
       setCurrentPage(value);
       const newOffset = (value * itemsPerPage) % items.length;
@@ -70,7 +68,6 @@ const MyPagination = ({ itemsPerPage }) => {
           handlePageClick={handlePageClick}
           lastPage={lastPage}
         />
-
         <Select placeholder="10/Page">
           {[5, 10, 15, 20].map((el) => (
             <option key={`${el}-per-page`} value={el}>
@@ -90,16 +87,17 @@ const MyPagination = ({ itemsPerPage }) => {
 const PageButton = ({ currentPage, lastPage, handlePageClick }) => {
   const render = [];
 
-  // if (currentPage - 1 >= 0) {
-  //   const prevPage = currentPage - 1;
-  //   render.push(
-  //     <IconButton
-  //       icon={<ChevronLeftIcon />}
-  //       value={prevPage}
-  //       onClick={handlePageClick}
-  //     />
-  //   );
-  // }
+  if (currentPage - 1 >= 0) {
+    const prevPage = currentPage - 1;
+    render.push(
+      <IconButton
+        icon={<ChevronLeftIcon />}
+        value={prevPage}
+        onClick={handlePageClick}
+        key={`prev-page-${prevPage}`}
+      />
+    );
+  }
 
   let startIdx;
   let endIdx;
@@ -118,34 +116,40 @@ const PageButton = ({ currentPage, lastPage, handlePageClick }) => {
   for (let idx = startIdx; idx < endIdx; idx++) {
     const offset = idx + 1;
     render.push(
-      <Button key={idx} onClick={handlePageClick} value={idx}>
+      <Button
+        key={`page-${offset}`}
+        onClick={handlePageClick}
+        value={idx}
+        colorScheme={idx === currentPage ? "yellow" : "gray"}
+      >
         {offset}
       </Button>
     );
   }
 
-  // if (endIdx < lastPage) {
-  //   const offset = lastPage - 1;
-  //   render.push(
-  //     <>
-  //       <FontAwesomeIcon icon={faEllipsisH} color="gray" />
-  //       <Button onClick={handlePageClick} value={offset}>
-  //         {lastPage}
-  //       </Button>
-  //     </>
-  //   );
-  // }
+  if (endIdx < lastPage) {
+    const offset = lastPage - 1;
+    render.push(
+      <React.Fragment key={`last-page-${lastPage}`}>
+        <FontAwesomeIcon icon={faEllipsisH} color="gray" />
+        <Button onClick={handlePageClick} value={offset}>
+          {lastPage}
+        </Button>
+      </React.Fragment>
+    );
+  }
 
-  // if (currentPage + 1 < lastPage) {
-  //   const nextPage = currentPage + 1;
-  //   render.push(
-  //     <IconButton
-  //       icon={<ChevronRightIcon />}
-  //       value={nextPage}
-  //       onClick={handlePageClick}
-  //     />
-  //   );
-  // }
+  if (currentPage + 1 < lastPage) {
+    const nextPage = currentPage + 1;
+    render.push(
+      <IconButton
+        icon={<ChevronRightIcon />}
+        value={nextPage}
+        onClick={handlePageClick}
+        key={`next-page-${nextPage}`}
+      />
+    );
+  }
   return render;
 };
 
