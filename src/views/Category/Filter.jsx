@@ -43,7 +43,6 @@ const Filter = ({ onSelectCategory, onSelectCollection, onSearch }) => {
             title: category,
           };
         });
-        result.push({value: "", title: "All"});
         setCategory(result);
       });
   }, []);

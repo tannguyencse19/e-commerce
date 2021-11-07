@@ -42,6 +42,7 @@ const Navbar = () => {
       px="10"
       backgroundColor="#fff"
       alignItems="center"
+      boxShadow="md"
     >
       <GridItem>
         <ReactLink to="/">

@@ -16,7 +16,7 @@ function App() {
   return (
     <ChakraProvider>
       <Router>
-        <Navbar></Navbar>
+        <Navbar />
         <Switch>
           <Route path="/pagination">
             {/* <Pagination itemsPerPage={3} /> */}

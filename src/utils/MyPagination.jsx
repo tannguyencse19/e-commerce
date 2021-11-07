@@ -1,4 +1,3 @@
-import { Grid, GridItem } from "@chakra-ui/layout";
 import {
   Button,
   IconButton,
@@ -6,33 +5,18 @@ import {
   NumberInput,
   NumberInputField,
   Text,
+  HStack,
 } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-const items = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-  23, 24, 25, 26,
-];
-
-function Items({ currentItems }) {
-  return (
-    <>
-      {currentItems &&
-        currentItems.map((item, idx) => (
-          <h3 key={`item-${idx}`}>Item #{item}</h3>
-        ))}
-    </>
-  );
-}
-
-const MyPagination = ({ itemsPerPage }) => {
-  const [currentItems, setCurrentItems] = React.useState(null);
+const MyPagination = ({ items, setCurrentItems }) => {
   const [lastPage, setLastPage] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(0);
   const [startOffset, setStartOffSet] = React.useState(0);
+  const [itemsPerPage, setItemsPerPage] = React.useState(5);
 
   React.useEffect(() => {
     const endOffset = startOffset + itemsPerPage;
@@ -41,9 +25,7 @@ const MyPagination = ({ itemsPerPage }) => {
     setLastPage(Math.ceil(items.length / itemsPerPage));
   }, [startOffset, itemsPerPage]);
 
-  const handlePageClick = (e, page) => {
-    console.log(page);
-    const value = parseInt(e.target.getAttribute("value"));
+  const handlePageClick = (value) => {
     // console.log(`page request: ${value}, current page: ${currentPage}`);
     if (!isNaN(value) && value >= 0 && value < lastPage) {
       setCurrentPage(value);
@@ -52,53 +34,76 @@ const MyPagination = ({ itemsPerPage }) => {
         `User requested page number ${value}, which is offset ${newOffset}`
       );
       setStartOffSet(newOffset);
-    } else {
-      // console.log(`target.value: ${e.target.getAttribute("value")}`);
+    } else console.log(`handlePageClick value: ${value}`);
+  };
+
+  const handleSetItemsPerPage = ({ target: { value } }) => {
+    handlePageClick(0);
+    if (!isNaN(parseInt(value))) {
+      setItemsPerPage(parseInt(value));
+    }
+  };
+
+  const handleGoTo = (e) => {
+    if (e.key === "Enter") {
+      const value = parseInt(e.target.value);
+      handlePageClick(value - 1);
     }
   };
 
   return (
-    <>
-      <Items currentItems={currentItems} />
-      <Grid
-        autoFlow="column"
-        justifyContent="center"
-        gap="5"
-        alignItems="center"
+    <HStack spacing="3">
+      <PageButton
+        currentPage={currentPage}
+        handlePageClick={handlePageClick}
+        lastPage={lastPage}
+        numberPageAhead={4}
+      />
+      <Select defaultValue="5" onChange={handleSetItemsPerPage}>
+        {[5, 10, 15, 20].map((el) => (
+          <option key={`${el}-per-page`} value={el}>
+            {el}/Page
+          </option>
+        ))}
+      </Select>
+      <Text>Go to:</Text>
+      <NumberInput
+        max={lastPage}
+        min={0}
+        maxW="20"
+        variant="filled"
+        onKeyDown={handleGoTo}
       >
-        <PageButton
-          currentPage={currentPage}
-          handlePageClick={handlePageClick}
-          lastPage={lastPage}
-        />
-        <Select placeholder="10/Page">
-          {[5, 10, 15, 20].map((el) => (
-            <option key={`${el}-per-page`} value={el}>
-              {el}/Page
-            </option>
-          ))}
-        </Select>
-        <Text>Go to:</Text>
-        <NumberInput max={lastPage} min={0} maxW="20" variant="filled">
-          <NumberInputField />
-        </NumberInput>
-      </Grid>
-    </>
+        <NumberInputField />
+      </NumberInput>
+    </HStack>
   );
 };
 
-const PageButton = ({ currentPage, lastPage, handlePageClick }) => {
+const PageButton = ({
+  currentPage,
+  lastPage,
+  handlePageClick,
+  numberPageAhead,
+}) => {
   const render = [];
 
   if (currentPage - 1 >= 0) {
-    const prevPage = currentPage - 1;
     render.push(
       <IconButton
         icon={<ChevronLeftIcon />}
-        // value={prevPage}
-        onClick={(e) => handlePageClick(e, prevPage)}
-        key={`prev-page-${prevPage}`}
+        onClick={() => handlePageClick(currentPage - 1)}
+        key={`prev-page-${currentPage - 1}`}
       />
+    );
+  }
+
+  if (currentPage > 2) {
+    render.push(
+      <React.Fragment key={`first-page`}>
+        <Button onClick={() => handlePageClick(0)}>1</Button>
+        <FontAwesomeIcon icon={faEllipsisH} color="gray" />
+      </React.Fragment>
     );
   }
 
@@ -106,13 +111,19 @@ const PageButton = ({ currentPage, lastPage, handlePageClick }) => {
   let endIdx;
   if (currentPage - 1 >= 0) {
     startIdx = currentPage - 1;
-    endIdx = startIdx + 5;
+    endIdx =
+      startIdx + numberPageAhead < lastPage
+        ? startIdx + numberPageAhead
+        : lastPage;
   } else {
     startIdx = 0;
-    endIdx = 5;
+    endIdx = lastPage >= numberPageAhead ? numberPageAhead : lastPage;
   }
-  if (currentPage + 3 >= lastPage) {
-    startIdx = lastPage - 5;
+  if (
+    currentPage + numberPageAhead >= lastPage &&
+    lastPage - numberPageAhead >= 0
+  ) {
+    startIdx = lastPage - numberPageAhead;
     endIdx = lastPage;
   }
 
@@ -121,8 +132,7 @@ const PageButton = ({ currentPage, lastPage, handlePageClick }) => {
     render.push(
       <Button
         key={`page-${offset}`}
-        onClick={handlePageClick}
-        value={idx}
+        onClick={() => handlePageClick(idx)}
         colorScheme={idx === currentPage ? "messenger" : "gray"}
       >
         {offset}
@@ -131,11 +141,10 @@ const PageButton = ({ currentPage, lastPage, handlePageClick }) => {
   }
 
   if (endIdx < lastPage) {
-    const offset = lastPage - 1;
     render.push(
       <React.Fragment key={`last-page-${lastPage}`}>
         <FontAwesomeIcon icon={faEllipsisH} color="gray" />
-        <Button onClick={handlePageClick} value={offset}>
+        <Button onClick={() => handlePageClick(lastPage - 1)}>
           {lastPage}
         </Button>
       </React.Fragment>
@@ -143,13 +152,11 @@ const PageButton = ({ currentPage, lastPage, handlePageClick }) => {
   }
 
   if (currentPage + 1 < lastPage) {
-    const nextPage = currentPage + 1;
     render.push(
       <IconButton
         icon={<ChevronRightIcon />}
-        value={nextPage}
-        onClick={handlePageClick}
-        key={`next-page-${nextPage}`}
+        onClick={() => handlePageClick(currentPage + 1)}
+        key={`prev-page-${currentPage + 1}`}
       />
     );
   }

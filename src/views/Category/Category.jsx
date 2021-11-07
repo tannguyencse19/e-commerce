@@ -51,7 +51,7 @@ const Category = () => {
   }, [handleFetchFilterCategory]);
 
   return (
-    <Container maxW="container.xl">
+    <Container maxW="container.xl" mt="10">
       <Grid
         autoFlow={{ base: "row", md: "column" }}
         gap="10"
