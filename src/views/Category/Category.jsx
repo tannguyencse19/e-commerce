@@ -3,38 +3,15 @@ import Filter from "./Filter";
 import Result from "./Result";
 import React from "react";
 import { Spinner } from "@chakra-ui/spinner";
+import useFetch from "../../utils/useFetch";
 
-const URI = "https://fakestoreapi.com/products";
+const URIHomePage = "https://fakestoreapi.com";
 
 const Category = () => {
-  const [Products, setProducts] = React.useState([]);
   const [FilterResult, setFilterResult] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [isError, setIsError] = React.useState(false);
   const [Category, setCategory] = React.useState("");
-
-  function fetchProducts(link) {
-    console.log(link);
-    fetch(link)
-      .then((res) => res.json())
-      .then((json) => {
-        setProducts(json);
-        setFilterResult(json);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsError(true);
-        setIsLoading(false);
-        throw err;
-      });
-  }
-
-  const handleFetchFilterCategory = React.useCallback(() => {
-    console.log("handleFetchFilterCategory");
-    setIsLoading(true);
-    if (!Category) fetchProducts(URI);
-    else fetchProducts(`${URI}/category/${Category}`);
-  }, [Category]);
+  const [URI, setURI] = React.useState(process.env.REACT_APP_GET_PRODUCTS);
+  const [Products, isLoading, isError] = useFetch(URI);
 
   function onSearch({ target: { value } }) {
     if (!value) setFilterResult(Products);
@@ -47,8 +24,13 @@ const Category = () => {
   }
 
   React.useEffect(() => {
-    handleFetchFilterCategory();
-  }, [handleFetchFilterCategory]);
+    if (Category) setURI(`${process.env.REACT_APP_GET_PRODUCT_IN_CATEGORY}/${Category}`);
+  }, [Category]);
+
+  React.useEffect(() => {
+    // fetch xogn moi setFilterResult
+    setFilterResult(Products);
+  }, [Products]);
 
   return (
     <Container maxW="container.xl" mt="10">

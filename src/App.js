@@ -8,8 +8,7 @@ import {
   Route,
 } from "react-router-dom";
 import Category from './views/Category/Category';
-import Pagination from './utils/Pagination';
-import MyPagination from './utils/MyPagination';
+import ProductDetails from './views/ProductDetails/ProductDetails';
 
 function App() {
   // 2. Use at the root of your app
@@ -18,10 +17,7 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route path="/pagination">
-            {/* <Pagination itemsPerPage={3} /> */}
-            <MyPagination itemsPerPage={3} />
-          </Route>
+          <Route path="/products/:id" component={ProductDetails} />
           <Route path="/category">
             <Category />
           </Route>

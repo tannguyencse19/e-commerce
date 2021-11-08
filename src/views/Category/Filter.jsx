@@ -6,6 +6,7 @@ import {
   Select,
   InputGroup,
   InputRightElement,
+  Container
 } from "@chakra-ui/react";
 import React from "react";
 
@@ -13,15 +14,6 @@ const inputStyle = {
   borderRadius: "20px",
   variant: "filled",
 };
-
-// const Category = [
-//   { value: "shirt", title: "Shirt" },
-//   { value: "pants", title: "Pants" },
-//   { value: "accessories", title: "Accessories" },
-//   { value: "glass", title: "Glass" },
-// ];
-
-const CategoryValue = ["shirt", "pants", "accessories", "glass"];
 
 const Collection = [
   { value: "halloween", title: "2021 Halloween Edition" },
@@ -33,7 +25,7 @@ const Filter = ({ onSelectCategory, onSelectCollection, onSearch }) => {
   const [Category, setCategory] = React.useState([]);
 
   React.useEffect(() => {
-    fetch("https://fakestoreapi.com/products/categories")
+    fetch(process.env.REACT_APP_GET_CATEGORIES)
       .then((res) => res.json())
       .then((json) => {
         const result = json.map((category, idx) => {
