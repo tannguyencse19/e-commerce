@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Category from './views/Category/Category';
 import ProductDetails from './views/ProductDetails/ProductDetails';
+import Carousel from './utils/Carousel_Choc'
 
 function App() {
   // 2. Use at the root of your app
@@ -17,13 +18,10 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route path="/products/:id" component={ProductDetails} />
-          <Route path="/category">
-            <Category />
-          </Route>
-          <Route exact path="/">
-            <Home></Home>
-          </Route>
+          <Route path="/carousel" component={Carousel} />
+          <Route path="/products/:id" children={ProductDetails} />
+          <Route path="/category" component={Category} />
+          <Route exact path="/" render={Home} />
         </Switch>
       </Router>
     </ChakraProvider>

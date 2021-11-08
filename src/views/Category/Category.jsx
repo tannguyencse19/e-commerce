@@ -5,32 +5,24 @@ import React from "react";
 import { Spinner } from "@chakra-ui/spinner";
 import useFetch from "../../utils/useFetch";
 
-const URIHomePage = "https://fakestoreapi.com";
-
 const Category = () => {
-  const [FilterResult, setFilterResult] = React.useState([]);
   const [Category, setCategory] = React.useState("");
   const [URI, setURI] = React.useState(process.env.REACT_APP_GET_PRODUCTS);
   const [Products, isLoading, isError] = useFetch(URI);
+  const [SearchValue, setSearchValue] = React.useState("");
 
-  function onSearch({ target: { value } }) {
-    if (!value) setFilterResult(Products);
-    else
-      setFilterResult(
-        Products.filter(
-          ({ title }) => title.toLowerCase().indexOf(value.toLowerCase()) > -1
-        )
-      );
-  }
+  const filterResult = React.useMemo(() => {
+    if (!SearchValue) return Products;
+
+    return Products.filter(
+      ({ title }) => title.toLowerCase().indexOf(SearchValue.toLowerCase()) > -1
+    );
+  }, [SearchValue, Products]);
 
   React.useEffect(() => {
-    if (Category) setURI(`${process.env.REACT_APP_GET_PRODUCT_IN_CATEGORY}/${Category}`);
+    if (Category)
+      setURI(`${process.env.REACT_APP_GET_PRODUCT_IN_CATEGORY}/${Category}`);
   }, [Category]);
-
-  React.useEffect(() => {
-    // fetch xogn moi setFilterResult
-    setFilterResult(Products);
-  }, [Products]);
 
   return (
     <Container maxW="container.xl" mt="10">
@@ -42,7 +34,7 @@ const Category = () => {
         <GridItem>
           <Filter
             onSelectCategory={(e) => setCategory(e.target.value)}
-            onSearch={onSearch}
+            onSearch={(e) => setSearchValue(e.target.value)}
           />
         </GridItem>
         <GridItem>
@@ -56,7 +48,7 @@ const Category = () => {
               size="xl"
             />
           )}
-          {!isLoading && <Result Products={FilterResult} />}
+          {!isLoading && <Result Products={filterResult} />}
         </GridItem>
       </Grid>
     </Container>

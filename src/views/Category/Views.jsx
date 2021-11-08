@@ -11,7 +11,7 @@ const Views = ({ Products }) => {
       )}
       {Products &&
         Products.map((item) => (
-          <RouterLink to={`/products/${item.id}`} key={item.id}>
+          <RouterLink to={`/products/${item.id}`} key={`item-${item.id}`}>
             <VStack
               spacing={3}
               _hover={{
