@@ -7,6 +7,7 @@ import {
   TabPanel,
   Fade,
   Button,
+  Box
 } from "@chakra-ui/react";
 import { Container, Grid, GridItem, Text } from "@chakra-ui/layout";
 import Rating from "../../utils/Rating";
@@ -25,7 +26,7 @@ const LatestProduct = () => {
   //https://stackoverflow.com/questions/58252454/react-hooks-using-usestate-vs-just-variables
 
   return (
-    <Container maxW="container.xl" px={{base: "5", md: "10"}} py={16}>
+    <Box px={{base: "5", md: "10"}} py={16}>
       <Tabs isLazy>
         <Grid
           autoFlow={{ base: "row", lg: "column" }}
@@ -138,7 +139,7 @@ const LatestProduct = () => {
             ))}
         </TabPanels>
       </Tabs>
-    </Container>
+    </Box>
   );
 };
 

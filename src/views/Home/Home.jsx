@@ -7,10 +7,8 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <Container maxW="container.xl">
         <ShopByCategory />
         <LatestProduct />
-      </Container>
     </>
   );
 };

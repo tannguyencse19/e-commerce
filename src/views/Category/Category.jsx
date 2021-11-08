@@ -11,6 +11,7 @@ const Category = () => {
   const [Products, isLoading, isError] = useFetch(URI);
   const [SearchValue, setSearchValue] = React.useState("");
 
+  // Chua chay
   const filterResult = React.useMemo(() => {
     if (!SearchValue) return Products;
 
