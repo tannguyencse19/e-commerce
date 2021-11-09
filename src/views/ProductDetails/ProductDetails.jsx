@@ -1,25 +1,11 @@
-import { Box, Container } from "@chakra-ui/layout";
+import { Box, Container, HStack, Text, VStack } from "@chakra-ui/layout";
 import React from "react";
 import Carousel from "../../utils/CarouselChoc";
 import useFetch from "../../utils/useFetch";
-
-const slides = [
-  {
-    img: "https://images.pexels.com/photos/2599537/pexels-photo-2599537.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  },
-  {
-    img: "https://images.pexels.com/photos/2714581/pexels-photo-2714581.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  },
-  {
-    img: "https://images.pexels.com/photos/2878019/pexels-photo-2878019.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
-  },
-  {
-    img: "https://images.pexels.com/photos/1142950/pexels-photo-1142950.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  },
-  {
-    img: "https://images.pexels.com/photos/3124111/pexels-photo-3124111.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-  },
-];
+import Rating from "../../utils/Rating";
+import { useNumberInput } from "@chakra-ui/number-input";
+import { Button } from "@chakra-ui/button";
+import { Input } from "@chakra-ui/input";
 
 const ProductDetails = ({
   match: {
@@ -29,6 +15,7 @@ const ProductDetails = ({
   const [Products, isLoading, isError] = useFetch(
     `${process.env.REACT_APP_GET_PRODUCTS}/${id}`
   );
+  console.log(Products);
   const [ProductsInSameCategory, load, err] = useFetch(
     `${process.env.REACT_APP_GET_PRODUCT_IN_CATEGORY}/${Products.category}`
   );
@@ -39,10 +26,51 @@ const ProductDetails = ({
     return Images;
   }, [ProductsInSameCategory]);
 
+  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
+    useNumberInput({
+      step: 1,
+      defaultValue: 1,
+      min: 1,
+      // max: 6,
+    });
+
+  const inc = getIncrementButtonProps();
+  const dec = getDecrementButtonProps();
+  const input = getInputProps();
+
   return (
-    <Box>
-      <Carousel slides={Slides} w="300px" h="400px" />
-    </Box>
+    <HStack p="10" justify="space-between">
+      <Box flexBasis="30%">
+        <Carousel slides={Slides} w="350px" h="400px" />
+      </Box>
+      {!isLoading && (
+        <VStack flexBasis="50%" align="flex-start">
+          <Text
+            fontSize="4xl"
+            fontWeight="bold"
+            fontFamily='"Playfair Display",serif'
+            width="xl"
+            overflowWrap="break-word"
+          >
+            {Products.title}
+          </Text>
+          <Rating
+            size={20}
+            scale={5}
+            fillColor="gold"
+            strokeColor="gold"
+            ratingProp={Products.rating.rate}
+          />
+          <Text>{Products.price}</Text>
+          <Text>{Products.description}</Text>
+          <HStack>
+            <Button {...dec}>-</Button>
+            <Input {...input} />
+            <Button {...inc}>+</Button>
+          </HStack>
+        </VStack>
+      )}
+    </HStack>
   );
 };
 
