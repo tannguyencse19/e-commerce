@@ -19,7 +19,6 @@ const iconButtonStyle = {
   _hover: {
     bg: "gray.900",
   },
-  ariaLabel: "chevron",
 };
 const arrowStyles = {
   color: "white",
@@ -27,14 +26,14 @@ const arrowStyles = {
   userSelect: "none",
 };
 
-const CarouselChoc = ({ slides, w, h }) => {
+const CarouselChoc = ({ Slides, slideLength, w, h, overflow, children }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const prevSlide = () => {
-    setCurrentSlide((s) => (s === 0 ? slides.length - 1 : s - 1));
+    setCurrentSlide((s) => (s === 0 ? slideLength - 1 : s - 1));
   };
   const nextSlide = () => {
-    setCurrentSlide((s) => (s === slides.length - 1 ? 0 : s + 1));
+    setCurrentSlide((s) => (s === slideLength - 1 ? 0 : s + 1));
   };
 
   const carouselStyle = {
@@ -46,25 +45,25 @@ const CarouselChoc = ({ slides, w, h }) => {
     <Flex
       w={w}
       h={h}
-      overflow="hidden"
+      overflow={overflow}
       pos="relative"
       //   bg={useColorModeValue("gray.200", "gray.600")}
     >
       <Flex h="400px" w="full" {...carouselStyle}>
-        {slides &&
-          slides.length > 0 &&
-          slides.map((slide, counter) => (
+        {Slides &&
+          Slides.length > 0 &&
+          Slides.map((slide, counter) => (
             // flex: none nghia la width, height an theo component, ko an theo flex
             <Box key={`slide-${counter}`} boxSize="full" flex="none">
               {/* <Text
-                color="white"
-                fontSize="xs"
-                p="8px 12px"
-                pos="absolute"
-                top="0"
-              >
-                {counter + 1} / {slides.length}
-              </Text> */}
+                    color="white"
+                    fontSize="xs"
+                    p="8px 12px"
+                    pos="absolute"
+                    top="0"
+                  >
+                    {counter + 1} / {slides.length}
+                  </Text> */}
               <Image src={slide.img} boxSize="full" backgroundSize="cover" />
             </Box>
           ))}

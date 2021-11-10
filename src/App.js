@@ -8,8 +8,8 @@ import {
   Route,
 } from "react-router-dom";
 import Category from './views/Category/Category';
-import ProductDetails from './views/ProductDetails/ProductDetails';
-import Carousel from './utils/CarouselChoc'
+import ProductDetails from './views/Product/Details';
+import Carousel from './utils/Carousel'
 
 function App() {
   // 2. Use at the root of your app
