@@ -7,8 +7,9 @@ import { SwiperSlide } from "swiper/react";
 import {
   Box,
   HStack,
-  Text,
   VStack,
+  Stack,
+  Text,
   useNumberInput,
   Button,
   ButtonGroup,
@@ -17,7 +18,7 @@ import {
   Skeleton,
   SkeletonText,
 } from "@chakra-ui/react";
-
+import { useBreakpointValue } from "@chakra-ui/react";
 const ProductDetails = ({
   match: {
     params: { id },
@@ -26,7 +27,6 @@ const ProductDetails = ({
   const [Products, ProductsLoading, ProductsErr] = useFetch(
     `${process.env.REACT_APP_GET_PRODUCTS}/${id}`
   );
-
   const [RelatedProducts, RelatedProductsLoading, RelatedProductsErr] =
     useFetch(
       `${process.env.REACT_APP_GET_PRODUCT_IN_CATEGORY}/${Products.category}`
@@ -42,18 +42,26 @@ const ProductDetails = ({
       min: 1,
       // max: 6,
     });
-
   const inc = getIncrementButtonProps();
   const dec = getDecrementButtonProps();
   const input = getInputProps();
 
+  const largerThanMd = useBreakpointValue({ base: false, md: true });
+  const largerThanLg = useBreakpointValue({ base: false, lg: true });
+
   return (
     <VStack spacing="10" background="gray.100" py="10">
-      <HStack justify="space-around" width="90%" background="white" py="10">
+      <Stack
+        direction={{ base: "column", xl: "row" }}
+        justify="space-around"
+        width="90%"
+        background="white"
+        p="10"
+      >
         <Box>
-          {RelatedProductsLoading && <Skeleton width="400px" height="300px" />}
+          {RelatedProductsLoading && <Skeleton width={{base: "auto", md: "400px"}} height="300px" />}
           {!RelatedProductsLoading && (
-            <Carousel drag={true} numOfSlides={1} width="400px">
+            <Carousel drag numOfSlides={1} width={largerThanMd ? "400px" : "auto"}>
               {RelatedProducts.map(({ image }, idx) => (
                 <SwiperSlide key={`image-${idx}`}>
                   <Image
@@ -72,13 +80,13 @@ const ProductDetails = ({
         </Box>
         <VStack align="flex-start" spacing="7">
           {ProductsLoading && (
-            <Box>
+            <Box width={{base: "100%", md: "auto"}}>
               <Skeleton height="16" />
               <Skeleton height="8" width="40" mt="4" />
               <Skeleton height="8" width="16" mt="4" />
               <SkeletonText mt="10" noOfLines={6} spacing={4} />
               <Skeleton height="8" width="48" mt="4" />
-              <Skeleton height="8" width="sm" mt="4" />
+              <Skeleton height="8" width={{base: "auto", md: "sm"}} mt="4" />
             </Box>
           )}
           {!ProductsLoading && (
@@ -87,7 +95,7 @@ const ProductDetails = ({
                 fontSize="4xl"
                 fontWeight="bold"
                 fontFamily='"Playfair Display",serif'
-                width="xl"
+                width={{ xl: "xl" }}
                 overflowWrap="break-word"
               >
                 {Products.title}
@@ -102,7 +110,7 @@ const ProductDetails = ({
               <Text fontSize="2xl" fontFamily='"Playfair Display",serif'>
                 {Products.price}$
               </Text>
-              <Text width="xl" overflowWrap="break-word">
+              <Text width={{ xl: "xl" }} overflowWrap="break-word">
                 {Products.description}
               </Text>
               <HStack>
@@ -125,7 +133,7 @@ const ProductDetails = ({
             </>
           )}
         </VStack>
-      </HStack>
+      </Stack>
 
       <VStack width="90%" background="white" align="flex-start">
         {!AllProductLoading && (
@@ -139,18 +147,24 @@ const ProductDetails = ({
             Related Products
           </Text>
         )}
-        <HStack width="100%" justify={true ? "space-between" : "none"}>
+        <Stack
+          // style for mobile version
+          width="100%"
+          direction={{ base: "column", xl: "row" }}
+          spacing="20"
+          justify="space-evenly"
+        >
           {AllProductLoading &&
             [1, 2, 3, 4].map((idx) => (
-              <Box p="10" key={`skeleton-${idx}`}>
+              <Box p="10" key={`skeleton-${idx}`} >
                 <Skeleton height="48" width="48" />
                 <Skeleton height="4" width="40" mt="4" />
                 <Skeleton height="4" width="16" mt="4" />
                 <SkeletonText mt="4" noOfLines={3} spacing={4} width="20" />
               </Box>
             ))}
-          {!AllProductLoading && (
-            <Carousel drag={false} numOfSlides={4} padding="0 30px">
+          {!AllProductLoading && largerThanLg && (
+            <Carousel numOfSlides={4} padding="0 30px">
               {AllProducts.map((item, idx) => (
                 <SwiperSlide key={`related-product-${idx}`}>
                   <ProductSummary {...item} />
@@ -158,7 +172,11 @@ const ProductDetails = ({
               ))}
             </Carousel>
           )}
-        </HStack>
+          {!largerThanLg &&
+            AllProducts.map((item, idx) => (
+              <ProductSummary {...item} key={`related-product-${idx}`} />
+            ))}
+        </Stack>
       </VStack>
     </VStack>
   );

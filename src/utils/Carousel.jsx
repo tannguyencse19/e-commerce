@@ -2,6 +2,7 @@
 import { Swiper } from "swiper/react";
 // import Swiper core and required modules
 import SwiperCore, { Navigation, Pagination } from "swiper";
+import { useMediaQuery } from "@chakra-ui/react"
 
 //https://stackoverflow.com/questions/69202975/module-not-found-cant-resolve-swiper-react
 //https://swiperjs.com/migration-guide
@@ -23,16 +24,18 @@ SwiperCore.use([Navigation, Pagination]);
 // };
 
 const Carousel = ({ drag, numOfSlides, width, height, padding, children }) => {
+  const [largerThanLg] = useMediaQuery("(min-width: 62em)")
+
   return (
     <>
       <Swiper
         // pagination={pagination}
-        navigation
+        navigation={largerThanLg}
+        pagination={!largerThanLg}
         spaceBetween={50}
         slidesPerView={numOfSlides} // or 'auto'
         grabCursor={true}
         // onSlideChange={() => console.log('slide change')}
-        // onSwiper={(swiper) => console.log(swiper)}
         simulateTouch={drag}
         style={{
           width: width,
@@ -52,6 +55,7 @@ Carousel.defaultProps = {
   width: "100%",
   height: "auto",
   padding: 0,
+  // navigation: false,
 };
 
 export default Carousel;

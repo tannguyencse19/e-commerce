@@ -11,7 +11,7 @@ const ProductSummary = ({image, title, rating, price, isHover}) => {
         cursor: "pointer",
       } : null}
       transitionDuration="0.3s"
-      align={{ base: "center", md: "flex-start" }}
+      align={{ base: "center", lg: "flex-start" }}
     >
       <Image src={image} boxSize="200px" fit="contain" mx="auto" />
       <Text fontFamily='"Roboto",serif' fontSize="md" maxW="xs">
