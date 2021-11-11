@@ -63,6 +63,7 @@ const Navbar = () => {
               _hover={{ color: "pink.400", cursor: "pointer" }}
               transitionDuration="0.4s"
               fontSize="large"
+              fontWeight="semibold"
               key={`nav-link-${idx}`}
             >
               <NavLink

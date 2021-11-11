@@ -2,18 +2,18 @@ import { Image } from "@chakra-ui/image";
 import { Text, VStack } from "@chakra-ui/layout";
 import Rating from "../../utils/Rating";
 
-const ProductSummary = ({image, title, rating, price}) => {
+const ProductSummary = ({image, title, rating, price, isHover}) => {
   return (
     <VStack
       spacing={3}
-      _hover={{
+      _hover={isHover ? {
         transform: "scale(1.04)",
         cursor: "pointer",
-      }}
+      } : null}
       transitionDuration="0.3s"
       align={{ base: "center", md: "flex-start" }}
     >
-      <Image src={image} boxSize="200px" fit="contain" />
+      <Image src={image} boxSize="200px" fit="contain" mx="auto" />
       <Text fontFamily='"Roboto",serif' fontSize="md" maxW="xs">
         {title}
       </Text>
@@ -35,5 +35,9 @@ const ProductSummary = ({image, title, rating, price}) => {
     </VStack>
   );
 };
+
+// ProductSummary.defaultProps = {
+//   isHover: false
+// }
 
 export default ProductSummary;
