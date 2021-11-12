@@ -14,7 +14,6 @@ const Hero = () => {
       backgroundImage="https://preview.colorlib.com/theme/estore/assets/img/hero/h1_hero.jpg.webp"
       backgroundSize="cover"
       backgroundRepeat="no-repeat"
-      backgroundAttachment="fixed"
       alt="Hero background"
       autoFlow="column"
       px="20"

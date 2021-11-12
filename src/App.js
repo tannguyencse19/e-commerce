@@ -9,7 +9,8 @@ import {
 } from "react-router-dom";
 import Category from './views/Category/Category';
 import ProductDetails from './views/Product/Details';
-import Carousel from './utils/Carousel'
+import Blog from './views/Blog/Blog';
+import CartDetails from './views/Cart/Details/Details';
 
 function App() {
   // 2. Use at the root of your app
@@ -18,9 +19,10 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route path="/carousel" component={Carousel} />
-          <Route path="/products/:id" component={ProductDetails} />
+          <Route path="/cart-detail" component={CartDetails} />
+          <Route path="/blog" component={Blog} />
           <Route path="/category" component={Category} />
+          <Route path="/products/:id" component={ProductDetails} />
           <Route exact path="/" render={Home} />
         </Switch>
       </Router>

@@ -12,11 +12,12 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
+  Text,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { Link as ReactLink, NavLink } from "react-router-dom";
-// import Badge from '../utils/Badge';
+import BadgeButton from "../utils/BadgeButton";
 import * as React from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
@@ -75,13 +76,12 @@ const Navbar = () => {
             </GridItem>
           ))}
         <GridItem>
-          <IconButton
-            variant="outline"
-            isRound
-            icon={<FontAwesomeIcon icon={faShoppingCart} />}
-            size="lg"
-          />
-          {/* <Badge counterProp={2} iconProp={faShoppingCart} /> */}
+          <NavLink to="/cart-detail">
+            <BadgeButton
+              counter={2}
+              buttonIcon={<FontAwesomeIcon icon={faShoppingCart} />}
+            />
+          </NavLink>
         </GridItem>
         <GridItem>
           <Button borderRadius="40px" colorScheme="blue">
@@ -138,7 +138,7 @@ const Navbar = () => {
               icon={<FontAwesomeIcon icon={faShoppingCart} />}
               size="lg"
             />
-            {/* <Badge counterProp={2} iconProp={faShoppingCart} /> */}
+            {/* <BadgeButton counterProp={2} iconProp={faShoppingCart} /> */}
             <Button borderRadius="40px" colorScheme="blue">
               Sign In
             </Button>

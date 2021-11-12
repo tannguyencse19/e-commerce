@@ -34,7 +34,7 @@ const Carousel = ({ drag, numOfSlides, width, height, padding, children }) => {
         pagination={!largerThanLg}
         spaceBetween={50}
         slidesPerView={numOfSlides} // or 'auto'
-        grabCursor={true}
+        grabCursor={drag}
         // onSlideChange={() => console.log('slide change')}
         simulateTouch={drag}
         style={{

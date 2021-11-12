@@ -22,7 +22,6 @@
 - Navbar Dropdown
 - Footer
 - Ranking: Hover hiện lên modal giống amazon
-- Fake API
 
 1. Đã làm
 
