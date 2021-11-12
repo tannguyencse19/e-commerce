@@ -1,6 +1,30 @@
-import { Table, Thead, Tbody, Tr, Th, Td, Image } from "@chakra-ui/react";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  Image,
+  Stack,
+  Divider,
+  Text,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+  Box,
+  Input,
+  InputRightElement,
+  InputGroup,
+  Button,
+} from "@chakra-ui/react";
 import useFetch from "../../../utils/useFetch";
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 
 function isObjectEmpty(obj) {
   return (
@@ -18,56 +42,109 @@ const DataTable = () => {
     process.env.REACT_APP_GET_PRODUCTS
   );
   const [CartProducts, setCartProducts] = React.useState([]);
+  const [Subtotal, setSubtotal] = React.useState(0);
 
   React.useEffect(() => {
     if (!isObjectEmpty(Cart) && AllProducts.length > 0) {
-      const result = AllProducts.filter((item) =>
-        Cart.products.some((el) => item.id === el.productId)
-      );
-      setCartProducts(result);
+      if (Cart.products.length > 0) {
+        const result = AllProducts.filter((item) =>
+          Cart.products.some((el) => item.id === el.productId)
+        );
+        result.forEach((item, idx) => {
+          item.quantity = Cart.products[idx].quantity;
+          item.total = item.quantity * item.price;
+        });
+        setCartProducts(result);
+      }
     }
   }, [Cart, AllProducts]);
 
-  return (
-    <Table variant="striped">
-      <Thead>
-        <Tr>
-          <Th>To convert</Th>
-          <Th>into</Th>
-          <Th isNumeric>multiply by</Th>
-        </Tr>
-      </Thead>
+  const handleStepper = (val, idx) => {
+    setCartProducts((prevState) => {
+      prevState[idx].quantity = parseInt(val);
+      prevState[idx].total = prevState[idx].quantity * prevState[idx].price;
+      return [...prevState];
+    });
+  };
 
-      <Tbody>
-        {CartProducts.length > 0 &&
-          CartProducts.map((item, idx) => (
-            <Tr>
-              <Td>
-                <Image src={item.image} />
-              </Td>
-              <Td>{item.title}</Td>
-              <Td>{item.price}</Td>
-              <Td>{Cart.products[idx].quantity}</Td>
-              <Td>Total</Td>
-            </Tr>
-          ))}
-        <Tr>
-          <Td>inches</Td>
-          <Td>millimetres (mm)</Td>
-          <Td isNumeric>25.4</Td>
-        </Tr>
-        <Tr>
-          <Td>feet</Td>
-          <Td>centimetres (cm)</Td>
-          <Td isNumeric>30.48</Td>
-        </Tr>
-        <Tr>
-          <Td>yards</Td>
-          <Td>metres (m)</Td>
-          <Td isNumeric>0.91444</Td>
-        </Tr>
-      </Tbody>
-    </Table>
+  React.useEffect(() => {
+    if (CartProducts.length > 0) {
+      setSubtotal(
+        CartProducts.reduce(
+          (prevItem, nextItem) => prevItem.total + nextItem.total
+        )
+      );
+    }
+  }, [CartProducts]);
+
+  return (
+    <Stack direction="row"  spacing="10">
+      <Table variant="striped" flexBasis="70%" bg="white">
+        <Thead>
+          <Tr>
+            <Th>Name</Th>
+            <Th>Price</Th>
+            <Th>Quantity</Th>
+            <Th isNumeric>Total</Th>
+          </Tr>
+        </Thead>
+
+        <Tbody>
+          {CartProducts.length > 0 &&
+            CartProducts.map((item, idx) => (
+              <Tr key={`product-${idx}`}>
+                <Td>
+                  <Stack>
+                    <Image src={item.image} boxSize="64px" />
+                    <Text>{item.title}</Text>
+                  </Stack>
+                </Td>
+                <Td>{item.price}</Td>
+                <Td isNumeric>
+                  <NumberInput
+                    step={1}
+                    defaultValue={item.quantity}
+                    min={0}
+                    maxW="20"
+                    onChange={(val) => handleStepper(val, idx)}
+                  >
+                    <NumberInputField />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper />
+                      <NumberDecrementStepper />
+                    </NumberInputStepper>
+                  </NumberInput>
+                </Td>
+                <Td isNumeric>{item.total}</Td>
+              </Tr>
+            ))}
+        </Tbody>
+
+        <Tfoot>
+          <Tr>
+            <Th></Th>
+            <Th></Th>
+            <Th>Subtotal</Th>
+            <Th isNumeric>{Subtotal}</Th>
+          </Tr>
+        </Tfoot>
+      </Table>
+
+      <Box flexBasis="30%" bg="white">
+        <Text>Shipping Address</Text>
+        <FontAwesomeIcon icon={faMapMarkerAlt} />
+        <Text>Hồ Chí Minh, Quận Thủ Đức, Phường Linh Trung</Text>
+        <Divider />
+        <Text fontWeight="semibold">Payment Information</Text>
+        <Text>Total: {Subtotal}</Text>
+        <Text>Shipping Fee: 10.00$</Text>
+        <Text>Sales: 5.00$</Text>
+        <Input placeholder="Coupon (accept only one)" />
+        <InputRightElement>
+          <Button>Apply</Button>
+        </InputRightElement>
+      </Box>
+    </Stack>
   );
 };
 

@@ -3,7 +3,7 @@ import { Box } from "@chakra-ui/react"
 
 const CartDetails = () => {
     return (
-        <Box>
+        <Box bg="gray.100">
             <DataTable />
         </Box>
     )
