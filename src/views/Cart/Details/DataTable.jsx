@@ -43,6 +43,9 @@ const DataTable = () => {
   );
   const [CartProducts, setCartProducts] = React.useState([]);
   const [Subtotal, setSubtotal] = React.useState(0);
+  const [Total, setTotal] = React.useState(0);
+  const [Sales, setSales] = React.useState(0);
+  const [Coupon, setCoupon] = React.useState({});
 
   React.useEffect(() => {
     if (!isObjectEmpty(Cart) && AllProducts.length > 0) {
@@ -69,17 +72,39 @@ const DataTable = () => {
 
   React.useEffect(() => {
     if (CartProducts.length > 0) {
-      setSubtotal(
-        CartProducts.reduce(
-          (prevItem, nextItem) => prevItem.total + nextItem.total
-        )
+      const sum = CartProducts.reduce(
+        (prevItem, nextItem) => prevItem.total + nextItem.total
       );
+      setSubtotal(sum);
+      setTotal(sum);
     }
   }, [CartProducts]);
 
+  const couponInput = React.useRef("");
+  const handleApplyCoupon = () => {
+    if (couponInput.current.value === "123") {
+      setCoupon({
+        id: "123",
+        name: "25% off",
+        percent_off: 25,
+        // valid: true --> get xong roi kiem tra roi moi cho render hay trong luc render kiem tra
+      });
+    }
+  };
+
+  // Chua sale off tren toan bo gia tri san pham
+  React.useEffect(() => {
+    if (!isObjectEmpty(Coupon)) {
+      setSales((Total * Coupon.percent_off) / 100);
+      setTotal(
+        (prevState) => prevState - (prevState * Coupon.percent_off) / 100
+      );
+    }
+  }, [Coupon]);
+
   return (
-    <Stack direction="row"  spacing="10">
-      <Table variant="striped" flexBasis="70%" bg="white">
+    <Stack direction="row" spacing="5">
+      <Table variant="striped" colorScheme="pink" flexBasis="70%" bg="white">
         <Thead>
           <Tr>
             <Th>Name</Th>
@@ -94,8 +119,8 @@ const DataTable = () => {
             CartProducts.map((item, idx) => (
               <Tr key={`product-${idx}`}>
                 <Td>
-                  <Stack>
-                    <Image src={item.image} boxSize="64px" />
+                  <Stack direction="row" align="center" spacing="5">
+                    <Image src={item.image} boxSize="108px" />
                     <Text>{item.title}</Text>
                   </Stack>
                 </Td>
@@ -119,30 +144,73 @@ const DataTable = () => {
               </Tr>
             ))}
         </Tbody>
-
-        <Tfoot>
-          <Tr>
-            <Th></Th>
-            <Th></Th>
-            <Th>Subtotal</Th>
-            <Th isNumeric>{Subtotal}</Th>
-          </Tr>
-        </Tfoot>
       </Table>
 
-      <Box flexBasis="30%" bg="white">
-        <Text>Shipping Address</Text>
-        <FontAwesomeIcon icon={faMapMarkerAlt} />
-        <Text>Hồ Chí Minh, Quận Thủ Đức, Phường Linh Trung</Text>
-        <Divider />
-        <Text fontWeight="semibold">Payment Information</Text>
-        <Text>Total: {Subtotal}</Text>
-        <Text>Shipping Fee: 10.00$</Text>
-        <Text>Sales: 5.00$</Text>
-        <Input placeholder="Coupon (accept only one)" />
-        <InputRightElement>
-          <Button>Apply</Button>
-        </InputRightElement>
+      <Box flexBasis="30%" bg="white" p="5">
+        <Stack spacing="3">
+          <Text>Shipping Address</Text>
+          <Stack direction="row" align="center">
+            <FontAwesomeIcon icon={faMapMarkerAlt} />
+            <Text>Hồ Chí Minh, Quận Thủ Đức, Phường Linh Trung</Text>
+          </Stack>
+          <Divider />
+          <Text fontWeight="semibold" fontSize="lg">
+            Payment Information
+          </Text>
+          {!CartIsLoading && (
+            <Table variant="unstyled" size="md">
+              <Tbody>
+                <Tr>
+                  <Td>Subtotal</Td>
+                  <Td isNumeric fontWeight="semibold">
+                    {Subtotal}$
+                  </Td>
+                </Tr>
+              </Tbody>
+              <Tbody>
+                <Tr>
+                  <Td>Shipping Fee</Td>
+                  <Td isNumeric fontWeight="semibold">
+                    10.00$
+                  </Td>
+                </Tr>
+              </Tbody>
+              <Tbody>
+                <Tr>
+                  <Td>Sales</Td>
+                  <Td isNumeric fontWeight="semibold">
+                    {Sales.toFixed(2)}$
+                  </Td>
+                </Tr>
+              </Tbody>
+              <Tbody>
+                <Tr>
+                  <Td>Total</Td>
+                  <Td
+                    isNumeric
+                    fontWeight="semibold"
+                    textColor="orange"
+                    fontSize="xl"
+                  >
+                    {(Total + 10).toFixed(2)}$
+                  </Td>
+                </Tr>
+              </Tbody>
+            </Table>
+          )}
+          <InputGroup>
+            <Input placeholder="Coupon (accept only one)" ref={couponInput} />
+            <InputRightElement width="16">
+              <Button colorScheme="teal" onClick={handleApplyCoupon}>
+                Apply
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+          <Text>Coupon: 123</Text>
+          <Button colorScheme="orange" textTransform="uppercase">
+            Checkout
+          </Button>
+        </Stack>
       </Box>
     </Stack>
   );
