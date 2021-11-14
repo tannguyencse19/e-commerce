@@ -2,7 +2,6 @@ import React from "react";
 import Carousel from "../../utils/Carousel";
 import useFetch from "../../utils/useFetch";
 import Rating from "../../utils/Rating";
-import ProductSummary from "./Summary";
 import { SwiperSlide } from "swiper/react";
 import {
   Box,
@@ -19,6 +18,8 @@ import {
   SkeletonText,
 } from "@chakra-ui/react";
 import { useBreakpointValue } from "@chakra-ui/react";
+import ProductRelated from "./Related";
+
 const ProductDetails = ({
   match: {
     params: { id },
@@ -31,9 +32,6 @@ const ProductDetails = ({
     useFetch(
       `${process.env.REACT_APP_GET_PRODUCT_IN_CATEGORY}/${Products.category}`
     );
-  const [AllProducts, AllProductLoading, AllProductErr] = useFetch(
-    `${process.env.REACT_APP_GET_PRODUCTS}`
-  );
 
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
@@ -47,7 +45,6 @@ const ProductDetails = ({
   const input = getInputProps();
 
   const largerThanMd = useBreakpointValue({ base: false, md: true });
-  const largerThanLg = useBreakpointValue({ base: false, lg: true });
 
   return (
     <VStack spacing="10" background="gray.100" py="10">
@@ -135,49 +132,7 @@ const ProductDetails = ({
         </VStack>
       </Stack>
 
-      <VStack width="90%" background="white" align="flex-start">
-        {!AllProductLoading && (
-          <Text
-            px="10"
-            py="5"
-            fontSize="3xl"
-            fontWeight="bold"
-            fontFamily="sans-serif"
-          >
-            Related Products
-          </Text>
-        )}
-        <Stack
-          // style for mobile version
-          width="100%"
-          direction={{ base: "column", xl: "row" }}
-          spacing="20"
-          justify="space-evenly"
-        >
-          {AllProductLoading &&
-            [1, 2, 3, 4].map((idx) => (
-              <Box p="10" key={`skeleton-${idx}`} >
-                <Skeleton height="48" width="48" />
-                <Skeleton height="4" width="40" mt="4" />
-                <Skeleton height="4" width="16" mt="4" />
-                <SkeletonText mt="4" noOfLines={3} spacing={4} width="20" />
-              </Box>
-            ))}
-          {!AllProductLoading && largerThanLg && (
-            <Carousel numOfSlides={4} padding="0 30px">
-              {AllProducts.map((item, idx) => (
-                <SwiperSlide key={`related-product-${idx}`}>
-                  <ProductSummary {...item} />
-                </SwiperSlide>
-              ))}
-            </Carousel>
-          )}
-          {!largerThanLg &&
-            AllProducts.map((item, idx) => (
-              <ProductSummary {...item} key={`related-product-${idx}`} />
-            ))}
-        </Stack>
-      </VStack>
+      <ProductRelated />
     </VStack>
   );
 };

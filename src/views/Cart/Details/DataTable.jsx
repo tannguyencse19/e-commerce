@@ -23,8 +23,7 @@ import {
 } from "@chakra-ui/react";
 import useFetch from "../../../utils/useFetch";
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { Link as RouterLink } from "react-router-dom";
 
 function isObjectEmpty(obj) {
   return (
@@ -45,7 +44,12 @@ const DataTable = () => {
   const [Subtotal, setSubtotal] = React.useState(0);
   const [Total, setTotal] = React.useState(0);
   const [Sales, setSales] = React.useState(0);
-  const [Coupon, setCoupon] = React.useState({});
+  const [Coupon, setCoupon] = React.useState({
+    id: "123",
+    name: "25% off",
+    percent_off: 25,
+    valid: true, // --> get xong roi kiem tra roi moi cho render hay trong luc render kiem tra
+  });
 
   React.useEffect(() => {
     if (!isObjectEmpty(Cart) && AllProducts.length > 0) {
@@ -82,29 +86,22 @@ const DataTable = () => {
 
   const couponInput = React.useRef("");
   const handleApplyCoupon = () => {
-    if (couponInput.current.value === "123") {
-      setCoupon({
-        id: "123",
-        name: "25% off",
-        percent_off: 25,
-        // valid: true --> get xong roi kiem tra roi moi cho render hay trong luc render kiem tra
+    if (couponInput.current.value === Coupon.id) {
+      setSales((Total * Coupon.percent_off) / 100);
+      setCoupon((prevState) => {
+        return { ...prevState, valid: false };
       });
     }
   };
 
   // Chua sale off tren toan bo gia tri san pham
   React.useEffect(() => {
-    if (!isObjectEmpty(Coupon)) {
-      setSales((Total * Coupon.percent_off) / 100);
-      setTotal(
-        (prevState) => prevState - (prevState * Coupon.percent_off) / 100
-      );
-    }
-  }, [Coupon]);
+    setTotal((prevState) => prevState - Sales);
+  }, [Sales]);
 
   return (
     <Stack direction="row" spacing="5">
-      <Table variant="striped" colorScheme="pink" flexBasis="70%" bg="white">
+      <Table flexBasis="70%" bg="white">
         <Thead>
           <Tr>
             <Th>Name</Th>
@@ -148,15 +145,10 @@ const DataTable = () => {
 
       <Box flexBasis="30%" bg="white" p="5">
         <Stack spacing="3">
-          <Text>Shipping Address</Text>
-          <Stack direction="row" align="center">
-            <FontAwesomeIcon icon={faMapMarkerAlt} />
-            <Text>Hồ Chí Minh, Quận Thủ Đức, Phường Linh Trung</Text>
-          </Stack>
-          <Divider />
-          <Text fontWeight="semibold" fontSize="lg">
+          <Text fontWeight="semibold" size="lg">
             Payment Information
           </Text>
+          <Divider />
           {!CartIsLoading && (
             <Table variant="unstyled" size="md">
               <Tbody>
@@ -189,7 +181,7 @@ const DataTable = () => {
                   <Td
                     isNumeric
                     fontWeight="semibold"
-                    textColor="orange"
+                    color="orange"
                     fontSize="xl"
                   >
                     {(Total + 10).toFixed(2)}$
@@ -208,7 +200,7 @@ const DataTable = () => {
           </InputGroup>
           <Text>Coupon: 123</Text>
           <Button colorScheme="orange" textTransform="uppercase">
-            Checkout
+            <RouterLink to="/checkout">Checkout</RouterLink>
           </Button>
         </Stack>
       </Box>

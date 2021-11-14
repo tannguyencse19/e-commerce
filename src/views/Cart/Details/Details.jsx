@@ -1,11 +1,13 @@
 import DataTable from "./DataTable"
-import { Box } from "@chakra-ui/react"
+import { Stack } from "@chakra-ui/react"
+import ProductRelated from "../../Product/Related";
 
 const CartDetails = () => {
     return (
-        <Box bg="gray.100" px="10" py="5">
+        <Stack bg="gray.100" px="10" py="5" spacing="10">
             <DataTable />
-        </Box>
+            <ProductRelated />
+        </Stack>
     )
 }
 
