@@ -6,16 +6,16 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-const FormInput = ({ register, registerName, errors, htmlFor, label }) => {
-  console.log(errors);
+const FormInput = ({ registerProp, errorProp, registerName, htmlFor, label }) => {
+  console.log(errorProp);
   return (
-    <FormControl isInvalid={errors[registerName]}>
+    <FormControl isInvalid={errorProp[registerName]}>
       <FormLabel htmlFor={htmlFor}>{label}</FormLabel>
       <Input
         id={htmlFor}
         placeholder="e.g: John"
         type="tel"
-        {...register(registerName, {
+        {...registerProp(registerName, {
           required: "This is required",
           minLength: {
             value: 4,
@@ -24,18 +24,18 @@ const FormInput = ({ register, registerName, errors, htmlFor, label }) => {
         })}
       />
       <FormErrorMessage>
-        {errors[registerName] && errors[registerName].message}
+        {errorProp[registerName] && errorProp[registerName].message}
       </FormErrorMessage>
     </FormControl>
   );
 };
 
 FormInput.defaultProps = {
-  register: null,
-  errors: null,
+  registerProp: null,
+  errorProp: null,
   registerName: "undefined",
   htmlFor: "undefined",
   label: "undefined",
 };
 
-export default React.memo(FormInput);
+export default FormInput;

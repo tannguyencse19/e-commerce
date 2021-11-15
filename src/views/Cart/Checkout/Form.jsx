@@ -37,10 +37,15 @@ const Form = () => {
     }
   }
 
+  const inputProp = {
+    registerProp: register,
+    errorProp: errors,
+  }
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing="5">
-        <FormInput register={register} errors={errors} />
+        <FormInput {...inputProp} registerName="abc" htmlFor="abc" label="abc"  />
         <Stack direction="row">
           <FormControl isInvalid={errors.firstName}>
             <FormLabel htmlFor="first-name">First name</FormLabel>
