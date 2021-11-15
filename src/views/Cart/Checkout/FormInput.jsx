@@ -6,15 +6,21 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-const FormInput = ({ registerProp, errorProp, registerName, htmlFor, label }) => {
-  console.log(errorProp);
+const FormInput = ({
+  registerProp,
+  errorProp,
+  registerName,
+  htmlFor,
+  label,
+  type,
+}) => {
   return (
     <FormControl isInvalid={errorProp[registerName]}>
       <FormLabel htmlFor={htmlFor}>{label}</FormLabel>
       <Input
         id={htmlFor}
         placeholder="e.g: John"
-        type="tel"
+        type={type}
         {...registerProp(registerName, {
           required: "This is required",
           minLength: {
@@ -36,6 +42,7 @@ FormInput.defaultProps = {
   registerName: "undefined",
   htmlFor: "undefined",
   label: "undefined",
+  type: "text",
 };
 
 export default FormInput;

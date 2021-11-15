@@ -40,113 +40,58 @@ const Form = () => {
   const inputProp = {
     registerProp: register,
     errorProp: errors,
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing="5">
-        <FormInput {...inputProp} registerName="abc" htmlFor="abc" label="abc"  />
         <Stack direction="row">
-          <FormControl isInvalid={errors.firstName}>
-            <FormLabel htmlFor="first-name">First name</FormLabel>
-            <Input
-              id="first-name"
-              placeholder="e.g: John"
-              {...register("firstName", {
-                required: "This is required",
-                minLength: { value: 3, message: "Minimum length should be 3" },
-              })}
-            />
-            <FormErrorMessage>
-              {errors.firstName && errors.firstName.message}
-            </FormErrorMessage>
-          </FormControl>
-
-          <FormControl isInvalid={errors.lastName}>
-            <FormLabel htmlFor="last-name">Last name</FormLabel>
-            <Input
-              id="last-name"
-              placeholder="e.g: Doe"
-              {...register("lastName", {
-                required: "This is required",
-                minLength: { value: 4, message: "Minimum length should be 4" },
-              })}
-            />
-            <FormErrorMessage>
-              {errors.lastName && errors.lastName.message}
-            </FormErrorMessage>
-          </FormControl>
+          <FormInput
+            {...inputProp}
+            registerName="firstName"
+            htmlFor="first-name"
+            label="First name"
+          />
+          <FormInput
+            {...inputProp}
+            registerName="lastName"
+            htmlFor="last-name"
+            label="Last name"
+          />
         </Stack>
 
         <Stack direction="row">
-          <FormControl isInvalid={errors.phone}>
-            <FormLabel htmlFor="phone">Phone number</FormLabel>
-            <Input
-              id="phone"
-              placeholder="e.g: John"
-              type="tel"
-              {...register("phone", {
-                required: "This is required",
-                minLength: {
-                  value: 4,
-                  message: "Minimum length should be 4",
-                },
-              })}
-            />
-            <FormErrorMessage>
-              {errors.phone && errors.phone.message}
-            </FormErrorMessage>
-          </FormControl>
+          <FormInput
+            {...inputProp}
+            registerName="phone"
+            htmlFor="phone"
+            type="tel"
+            label="Phone number"
+          />
 
-          <FormControl isInvalid={errors.email}>
-            <FormLabel htmlFor="email">Email</FormLabel>
-            <Input
-              id="email"
-              placeholder="e.g: Doe"
-              type="email"
-              {...register("email", {
-                required: "This is required",
-                minLength: { value: 4, message: "Minimum length should be 4" },
-              })}
-            />
-            <FormErrorMessage>
-              {errors.email && errors.email.message}
-            </FormErrorMessage>
-          </FormControl>
+          <FormInput
+            {...inputProp}
+            registerName="email"
+            htmlFor="email"
+            type="email"
+            label="Phone number"
+          />
         </Stack>
 
-        <FormControl isInvalid={errors.address}>
-          <FormLabel htmlFor="address">
-            Address (Town/City - District - Country)
-          </FormLabel>
-          <Input
-            id="address"
-            placeholder="e.g: 123 St. Mary, Torino, Italy"
-            {...register("address", {
-              required: "This is required",
-              minLength: { value: 4, message: "Minimum length should be 4" },
-            })}
-          />
-          <FormErrorMessage>
-            {errors.address && errors.address.message}
-          </FormErrorMessage>
-        </FormControl>
+        <FormInput
+          {...inputProp}
+          registerName="address"
+          htmlFor="address"
+          label="Address"
+        />
 
-        <FormControl isInvalid={errors.zip}>
-          <FormLabel htmlFor="zip">Zipcode</FormLabel>
-          <Input
-            id="zip"
-            placeholder="e.g: 123 St. Mary, Torino, Italy"
-            type="number"
-            {...register("zip", {
-              required: "This is required",
-              minLength: { value: 4, message: "Minimum length should be 4" },
-            })}
-          />
-          <FormErrorMessage>
-            {errors.zip && errors.zip.message}
-          </FormErrorMessage>
-        </FormControl>
+        <FormInput
+          {...inputProp}
+          registerName="zip"
+          htmlFor="zip"
+          type="number"
+          label="Zipcode"
+        />
 
         <Text>Shipping Details</Text>
         <Checkbox
@@ -156,22 +101,12 @@ const Form = () => {
           Ship to a different address?
         </Checkbox>
         {OtherAddress && (
-          <FormControl isInvalid={errors.otherAddress}>
-            <FormLabel htmlFor="other-address">
-              Address (Town/City - District - Country)
-            </FormLabel>
-            <Input
-              id="other-address"
-              placeholder="e.g: 123 St. Mary, Torino, Italy"
-              {...register("otherAddress", {
-                required: "This is required",
-                minLength: { value: 4, message: "Minimum length should be 4" },
-              })}
-            />
-            <FormErrorMessage>
-              {errors.otherAddress && errors.otherAddress.message}
-            </FormErrorMessage>
-          </FormControl>
+          <FormInput
+            {...inputProp}
+            registerName="otherAddress"
+            htmlFor="other-address"
+            label="Other Address"
+          />
         )}
 
         <FormLabel htmlFor="notes">Order notes</FormLabel>
