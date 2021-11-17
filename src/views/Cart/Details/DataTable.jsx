@@ -2,7 +2,6 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
@@ -199,9 +198,11 @@ const DataTable = () => {
             </InputRightElement>
           </InputGroup>
           <Text>Coupon: 123</Text>
-          <Button colorScheme="orange" textTransform="uppercase">
-            <RouterLink to="/checkout">Checkout</RouterLink>
-          </Button>
+          <RouterLink to="/checkout">
+            <Button colorScheme="orange" textTransform="uppercase">
+              Checkout
+            </Button>
+          </RouterLink>
         </Stack>
       </Box>
     </Stack>

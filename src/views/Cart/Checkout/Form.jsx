@@ -1,10 +1,7 @@
 import { useForm } from "react-hook-form";
 import React from "react";
 import {
-  FormErrorMessage,
   FormLabel,
-  FormControl,
-  Input,
   Textarea,
   Text,
   Button,
@@ -12,6 +9,7 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import FormInput from "./FormInput";
+import { useHistory } from "react-router-dom"
 
 const Form = () => {
   const {
@@ -20,6 +18,7 @@ const Form = () => {
     formState: { errors, isSubmitting },
   } = useForm();
   const [OtherAddress, setOtherAddress] = React.useState(false);
+  const history = useHistory();
 
   //   console.log(errors);
 
@@ -35,6 +34,8 @@ const Form = () => {
     } catch (err) {
       console.log(err);
     }
+
+    history.push('/card-payment')
   }
 
   const inputProp = {
@@ -49,22 +50,15 @@ const Form = () => {
           <FormInput
             {...inputProp}
             registerName="firstName"
-            htmlFor="first-name"
             label="First name"
           />
-          <FormInput
-            {...inputProp}
-            registerName="lastName"
-            htmlFor="last-name"
-            label="Last name"
-          />
+          <FormInput {...inputProp} registerName="lastName" label="Last name" />
         </Stack>
 
         <Stack direction="row">
           <FormInput
             {...inputProp}
             registerName="phone"
-            htmlFor="phone"
             type="tel"
             label="Phone number"
           />
@@ -72,23 +66,16 @@ const Form = () => {
           <FormInput
             {...inputProp}
             registerName="email"
-            htmlFor="email"
             type="email"
             label="Phone number"
           />
         </Stack>
 
-        <FormInput
-          {...inputProp}
-          registerName="address"
-          htmlFor="address"
-          label="Address"
-        />
+        <FormInput {...inputProp} registerName="address" label="Address" />
 
         <FormInput
           {...inputProp}
           registerName="zip"
-          htmlFor="zip"
           type="number"
           label="Zipcode"
         />
@@ -104,17 +91,17 @@ const Form = () => {
           <FormInput
             {...inputProp}
             registerName="otherAddress"
-            htmlFor="other-address"
             label="Other Address"
           />
         )}
 
-        <FormLabel htmlFor="notes">Order notes</FormLabel>
-        <Textarea
-          id="notes"
-          placeholder="e.g: Call me when you arrive"
-          {...register("notes")}
-        />
+        <FormLabel>
+          Order notes
+          <Textarea
+            placeholder="e.g: Call me when you arrive"
+            {...register("notes")}
+          />
+        </FormLabel>
 
         <Button
           mt={4}
