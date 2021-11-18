@@ -10,20 +10,23 @@ app.use(bodyParser.json())
 
 app.use(cors())
 
-app.post("/payment", cors(), async (req, res) => {
-    let { amount, id } = req.body
+app.post("/create-payment-intent", cors(), async (req, res) => {
+    // let { amount, id } = req.body
 
     try {
-        await stripe.paymentIntents.create({
-            amount,
+        const { client_secret } = await stripe.paymentIntents.create({
+            amount: 1000,
             currency: "USD",
-            description: "Spatula company",
-            payment_method: id,
-            confirm: true
+            // payment_method: id,
+            // confirm: true,
+            automatic_payment_methods: {
+                enabled: true,
+            },
         })
         res.json({
             message: "Payment successful",
-            success: true
+            success: true,
+            clientSecret: client_secret,
         })
     } catch (error) {
         console.log("Error", error)
