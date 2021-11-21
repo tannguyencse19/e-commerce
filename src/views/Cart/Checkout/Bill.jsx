@@ -9,6 +9,7 @@ import {
   Tr,
   Th,
   Td,
+  Button,
 } from "@chakra-ui/react";
 
 const BillInfo = {
@@ -77,6 +78,14 @@ const CheckoutBill = () => {
           </Tr>
         </Tfoot>
       </Table>
+      <form
+        action="http://localhost:4000/create-checkout-session"
+        method="post"
+      >
+        <Button type="submit" colorScheme="orange">
+          Checkout
+        </Button>
+      </form>
     </Stack>
   );
 };

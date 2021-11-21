@@ -38,6 +38,14 @@ const Stripe = () => {
 
   return (
     <>
+      <form
+        action="http://localhost:4000/create-checkout-session"
+        method="post"
+      >
+        <Button type="submit" colorScheme="teal">
+          Checkout
+        </Button>
+      </form>
       {clientSecret && (
         <Elements options={options} stripe={loadStripe(STRIPE_API_TEST_KEY)}>
           <CheckoutForm />
@@ -58,7 +66,6 @@ const CheckoutForm = () => {
     setIsSucceed(false);
 
     try {
-      
     } catch (err) {
       console.log(err);
     }
