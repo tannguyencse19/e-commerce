@@ -78,14 +78,10 @@ const CheckoutBill = () => {
           </Tr>
         </Tfoot>
       </Table>
-      <form
-        action="http://localhost:4000/create-checkout-session"
-        method="post"
-      >
-        <Button type="submit" colorScheme="orange">
-          Checkout
-        </Button>
-      </form>
+
+      <Button type="submit" colorScheme="orange">
+        Checkout
+      </Button>
     </Stack>
   );
 };
