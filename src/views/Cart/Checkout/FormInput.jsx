@@ -6,7 +6,14 @@ import {
   Input,
 } from "@chakra-ui/react";
 
-const FormInput = ({ registerProp, errorProp, registerName, label, type, rule }) => {
+const FormInput = ({
+  registerProp,
+  errorProp,
+  registerName,
+  label,
+  type,
+  rule,
+}) => {
   return (
     <FormControl isInvalid={errorProp[registerName]}>
       <FormLabel>
@@ -14,7 +21,7 @@ const FormInput = ({ registerProp, errorProp, registerName, label, type, rule })
         <Input
           placeholder="e.g: John"
           type={type}
-          {...registerProp(registerName, rule)}
+          {...registerProp(registerName, { ...rule })}
         />
       </FormLabel>
 

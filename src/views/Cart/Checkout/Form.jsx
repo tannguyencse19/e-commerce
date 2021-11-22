@@ -7,7 +7,7 @@ const ruleName = {
   required: "This is required",
   pattern: {
     value: /[A-Za-z]/,
-    message: "violate regex", // JS only: <p>error message</p> TS only support string
+    message: "violate regex",
   },
 };
 
@@ -15,15 +15,15 @@ const ruleNumber = {
   required: "This is required",
   // max: {
   //   value: 3,
-  //   message: 'error message' // JS only: <p>error message</p> TS only support string
+  //   message: 'error message'
   // },
   validate: {
     positive: (v) => parseInt(v) > 0 || "should be greater than 0",
-    // checkUrl: async () => (await fetch()) || "error message", // JS only: <p>error message</p> TS only support string
+    // checkUrl: async () => (await fetch()) || "error message",
   },
   pattern: {
     value: /[0-9+]/,
-    message: "violate regex", // JS only: <p>error message</p> TS only support string
+    message: "violate regex",
   },
 };
 

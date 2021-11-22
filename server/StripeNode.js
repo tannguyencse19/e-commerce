@@ -37,7 +37,7 @@ app.post("/create-payment-intent", cors(), async (req, res) => {
   }
 })
 
-app.post('/create-checkout-session', async (req, res) => {
+app.get('/create-checkout-session', async (req, res) => {
   const { url } = await stripe.checkout.sessions.create({
     line_items: [
       {
