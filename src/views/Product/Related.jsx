@@ -18,7 +18,7 @@ const ProductRelated = () => {
   );
   const largerThanLg = useBreakpointValue({ base: false, lg: true });
   return (
-    <Stack width="90%" background="white" align="flex-start">
+    <Stack width="100%" align="flex-start">
       {!AllProductLoading && (
         <Text
           px="10"
@@ -31,8 +31,8 @@ const ProductRelated = () => {
         </Text>
       )}
       <Stack
-        // style for mobile version
         width="100%"
+        // style for mobile version
         direction={{ base: "column", xl: "row" }}
         spacing="20"
         justify="space-evenly"

@@ -28,18 +28,12 @@ const ruleNumber = {
 };
 
 const Form = () => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { register, control } = useFormContext();
   const [OtherAddress, setOtherAddress] = React.useState(false);
-
-  //   console.log(errors);
 
   // Phai lam vay vi moi form la mot obj khac nhau
   const inputProp = {
-    registerProp: register,
-    errorProp: errors,
+    control: control,
   };
 
   return (

@@ -132,12 +132,14 @@ const Navbar = () => {
           </DrawerBody>
 
           <DrawerFooter>
-            <IconButton
-              variant="outline"
-              isRound
-              icon={<FontAwesomeIcon icon={faShoppingCart} />}
-              size="lg"
-            />
+            <ReactLink to="/cart-detail">
+              <IconButton
+                variant="outline"
+                isRound
+                icon={<FontAwesomeIcon icon={faShoppingCart} />}
+                size="lg"
+              />
+            </ReactLink>
             {/* <BadgeButton counterProp={2} iconProp={faShoppingCart} /> */}
             <Button borderRadius="40px" colorScheme="blue">
               Sign In

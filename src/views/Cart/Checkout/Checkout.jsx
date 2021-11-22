@@ -2,17 +2,20 @@ import { Stack, Box } from "@chakra-ui/react";
 import Bill from "./Bill";
 import Form from "./Form";
 import { useForm, FormProvider } from "react-hook-form";
+import { sleepAwait } from "../../../utils/Helper";
 
 const CartCheckout = () => {
   const methods = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
+
+  const onSubmit = async (data) => {
     // fetch("http://localhost:4000/create-checkout-session", {
     //   method: "POST",
     //   // headers: { "Content-Type": "application/json" },
     //   // body: JSON.stringify(data),
     // });
-    window.location = "http://localhost:4000/create-checkout-session"; // xai tam thoi
+    await sleepAwait(2000);
+    console.log(data);
+    // window.location = "http://localhost:4000/create-checkout-session"; // xai tam thoi
   };
 
   return (

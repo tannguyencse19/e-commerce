@@ -52,15 +52,17 @@ const DataTable = () => {
 
   React.useEffect(() => {
     if (!isObjectEmpty(Cart) && AllProducts.length > 0) {
-      if (Cart.products.length > 0) {
-        const result = AllProducts.filter((item) =>
-          Cart.products.some((el) => item.id === el.productId)
-        );
-        result.forEach((item, idx) => {
-          item.quantity = Cart.products[idx].quantity;
-          item.total = item.quantity * item.price;
-        });
-        setCartProducts(result);
+      if (Cart.hasOwnProperty('products')) {
+        if (Cart.products.length > 0) {
+          const result = AllProducts.filter((item) =>
+            Cart.products.some((el) => item.id === el.productId)
+          );
+          result.forEach((item, idx) => {
+            item.quantity = Cart.products[idx].quantity;
+            item.total = item.quantity * item.price;
+          });
+          setCartProducts(result);
+        }
       }
     }
   }, [Cart, AllProducts]);
@@ -199,7 +201,7 @@ const DataTable = () => {
           </InputGroup>
           <Text>Coupon: 123</Text>
           <RouterLink to="/checkout">
-            <Button colorScheme="orange" textTransform="uppercase">
+            <Button colorScheme="orange">
               Checkout
             </Button>
           </RouterLink>

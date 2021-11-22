@@ -5,42 +5,55 @@ import {
   FormControl,
   Input,
 } from "@chakra-ui/react";
+import { useController } from "react-hook-form";
 
 const FormInput = ({
-  registerProp,
-  errorProp,
   registerName,
   label,
   type,
   rule,
+  control
 }) => {
+  const {
+    field: { onChange, onBlur, name, value, ref },
+    fieldState: { error },
+  } = useController({
+    name: registerName,
+    control: control,
+    rules: rule,
+    defaultValue: "",
+  });
+
   return (
-    <FormControl isInvalid={errorProp[registerName]}>
+    <FormControl isInvalid={error}>
       <FormLabel>
         {label}
         <Input
           placeholder="e.g: John"
           type={type}
-          {...registerProp(registerName, { ...rule })}
+          onChange={onChange}
+          onBlur={onBlur}
+          value={value}
+          name={name}
+          ref={ref}
         />
       </FormLabel>
 
       <FormErrorMessage>
-        {errorProp[registerName] && errorProp[registerName].message}
+        {error && error.message}
       </FormErrorMessage>
     </FormControl>
   );
 };
 
 FormInput.defaultProps = {
-  registerProp: null,
-  errorProp: null,
-  registerName: "undefined",
-  label: "undefined",
+  registerName: undefined,
+  label: undefined,
   type: "text",
   rule: {
     required: "This is required",
   },
+  control: null,
 };
 
 export default FormInput;

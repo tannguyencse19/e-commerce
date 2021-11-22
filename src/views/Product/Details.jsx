@@ -56,9 +56,15 @@ const ProductDetails = ({
         p="10"
       >
         <Box>
-          {RelatedProductsLoading && <Skeleton width={{base: "auto", md: "400px"}} height="300px" />}
+          {RelatedProductsLoading && (
+            <Skeleton width={{ base: "auto", md: "400px" }} height="300px" />
+          )}
           {!RelatedProductsLoading && (
-            <Carousel drag numOfSlides={1} width={largerThanMd ? "400px" : "auto"}>
+            <Carousel
+              drag
+              numOfSlides={1}
+              width={largerThanMd ? "400px" : "auto"}
+            >
               {RelatedProducts.map(({ image }, idx) => (
                 <SwiperSlide key={`image-${idx}`}>
                   <Image
@@ -77,13 +83,13 @@ const ProductDetails = ({
         </Box>
         <VStack align="flex-start" spacing="7">
           {ProductsLoading && (
-            <Box width={{base: "100%", md: "auto"}}>
+            <Box width={{ base: "100%", md: "auto" }}>
               <Skeleton height="16" />
               <Skeleton height="8" width="40" mt="4" />
               <Skeleton height="8" width="16" mt="4" />
               <SkeletonText mt="10" noOfLines={6} spacing={4} />
               <Skeleton height="8" width="48" mt="4" />
-              <Skeleton height="8" width={{base: "auto", md: "sm"}} mt="4" />
+              <Skeleton height="8" width={{ base: "auto", md: "sm" }} mt="4" />
             </Box>
           )}
           {!ProductsLoading && (
@@ -132,7 +138,9 @@ const ProductDetails = ({
         </VStack>
       </Stack>
 
-      <ProductRelated />
+      <Box width="90%" background="white">
+        <ProductRelated />
+      </Box>
     </VStack>
   );
 };

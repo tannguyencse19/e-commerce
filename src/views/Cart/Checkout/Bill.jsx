@@ -11,6 +11,9 @@ import {
   Td,
   Button,
 } from "@chakra-ui/react";
+import React from "react";
+import { useFormContext, useFormState } from "react-hook-form";
+import { sleepAwait } from "../../../utils/Helper";
 
 const BillInfo = {
   products: [
@@ -36,6 +39,19 @@ const BillInfo = {
 };
 
 const CheckoutBill = () => {
+  const { control } = useFormContext();
+  const { isSubmitting } = useFormState({
+    control,
+  });
+  const [preventSpam, setPreventSpam] = React.useState(false);
+
+  async function handleClick() {
+    await sleepAwait(2000);
+    setPreventSpam(true);
+    await sleepAwait(2000);
+    setPreventSpam(false);
+  }
+
   return (
     <Stack>
       <Text>Your Order</Text>
@@ -79,8 +95,14 @@ const CheckoutBill = () => {
         </Tfoot>
       </Table>
 
-      <Button type="submit" colorScheme="orange">
-        Checkout
+      <Button
+        type="submit"
+        colorScheme="orange"
+        isLoading={isSubmitting}
+        isDisabled={preventSpam}
+        onClick={handleClick}
+      >
+        Go to Payment
       </Button>
     </Stack>
   );
