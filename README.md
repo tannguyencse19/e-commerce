@@ -13,7 +13,6 @@
 
 1. Maintain
 
-- Dark mode: https://chakra-ui.com/docs/features/color-mode
 - Refactor Bill component (Checkout, Payment)
 - Loading UI:
 
@@ -30,6 +29,9 @@
 - Responsive
 
 2. Chưa làm xong
+
+- Dark mode: https://chakra-ui.com/docs/features/color-mode --> Lỗi background white/gray trong dark mode
+- Recaptcha: Chưa chạy
 
 - Fixed Navbar
 
