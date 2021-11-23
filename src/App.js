@@ -1,4 +1,3 @@
-import Test from './components/Test';
 import { ChakraProvider } from "@chakra-ui/react"
 import Navbar from './components/Navbar';
 import Home from './views/Home/Home';
@@ -13,11 +12,12 @@ import Blog from './views/Blog/Blog';
 import CartDetails from './views/Cart/Details/Details';
 import CartCheckout from './views/Cart/Checkout/Checkout';
 import Stripe from './views/Cart/Checkout/Stripe';
+import theme from './utils/theme'
 
 function App() {
   // 2. Use at the root of your app
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Router>
         <Navbar />
         <Switch>

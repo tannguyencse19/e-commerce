@@ -13,13 +13,14 @@ import {
   DrawerCloseButton,
   useDisclosure,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { Link as ReactLink, NavLink } from "react-router-dom";
 import BadgeButton from "../utils/BadgeButton";
 import * as React from "react";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 const NavMenu = [
   { name: "Home", path: "/" },
@@ -32,6 +33,7 @@ const NavMenu = [
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Grid
@@ -41,7 +43,6 @@ const Navbar = () => {
       w="100%"
       py="5"
       px="10"
-      backgroundColor="#fff"
       alignItems="center"
     >
       <GridItem>
@@ -75,6 +76,13 @@ const Navbar = () => {
               </NavLink>
             </GridItem>
           ))}
+
+        <IconButton
+          onClick={toggleColorMode}
+          variant="ghost"
+          icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+        />
+
         <GridItem>
           <NavLink to="/cart-detail">
             <BadgeButton
