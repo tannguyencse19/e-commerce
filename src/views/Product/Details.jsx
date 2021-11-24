@@ -16,9 +16,13 @@ import {
   Image,
   Skeleton,
   SkeletonText,
+  useColorModeValue,
+  LightMode,
 } from "@chakra-ui/react";
 import { useBreakpointValue } from "@chakra-ui/react";
 import ProductRelated from "./Related";
+import DividerHelper from "../../utils/DividerHelper";
+import { darkModeColor } from "../../utils/Helper";
 
 const ProductDetails = ({
   match: {
@@ -47,13 +51,13 @@ const ProductDetails = ({
   const largerThanMd = useBreakpointValue({ base: false, md: true });
 
   return (
-    <VStack spacing="10" background="gray.100" py="10">
+    <VStack spacing="16" py="10">
       <Stack
         direction={{ base: "column", xl: "row" }}
         justify="space-around"
-        width="90%"
-        background="white"
+        width="100%"
         p="10"
+        background={useColorModeValue("gray.100", darkModeColor)}
       >
         <Box>
           {RelatedProductsLoading && (
@@ -125,20 +129,28 @@ const ProductDetails = ({
                   +
                 </Button>
               </HStack>
-              <ButtonGroup width={{ md: "md" }}>
-                <Button isFullWidth colorScheme="orange">
-                  Buy Now
-                </Button>
-                <Button isFullWidth colorScheme="messenger">
-                  Add To Cart
-                </Button>
-              </ButtonGroup>
+              <LightMode>
+                <ButtonGroup width={{ md: "md" }}>
+                  <Button isFullWidth colorScheme="orange">
+                    Buy Now
+                  </Button>
+                  <Button isFullWidth colorScheme="messenger">
+                    Add To Cart
+                  </Button>
+                </ButtonGroup>
+              </LightMode>
             </>
           )}
         </VStack>
       </Stack>
 
-      <Box width="90%" background="white">
+      <DividerHelper />
+
+      <Box
+        width="100%"
+        mt="0"
+        background={useColorModeValue("gray.100", darkModeColor)}
+      >
         <ProductRelated />
       </Box>
     </VStack>

@@ -6,21 +6,24 @@ import {
   Slide,
   Button,
   ButtonGroup,
+  useColorModeValue,
+  LightMode,
 } from "@chakra-ui/react";
 
 const Hero = () => {
   return (
     <Grid
-      backgroundImage="https://preview.colorlib.com/theme/estore/assets/img/hero/h1_hero.jpg.webp"
       backgroundSize="cover"
       backgroundRepeat="no-repeat"
+      backgroundColor="#C8EBFF"
       alt="Hero background"
       autoFlow="column"
       px="20"
       alignItems="center"
       justifyContent="center"
+      mt="0 !important"
     >
-      <GridItem display={{base: "none", lg:"inline"}}>
+      <GridItem display={{ base: "none", lg: "inline" }}>
         <Slide
           direction="left"
           style={{ position: "inherit", transition: "all 0.4s ease-out" }}
@@ -37,11 +40,7 @@ const Hero = () => {
           in
           unmountOnExit
         >
-          <Text
-            fontSize="5xl"
-            fontFamily='"Yellowtail", cursive'
-            color="red"
-          >
+          <Text fontSize="5xl" fontFamily='"Yellowtail", cursive' color="red">
             60% Discount
           </Text>
           <Text
@@ -50,6 +49,7 @@ const Hero = () => {
             letterSpacing="tight"
             fontWeight="extrabold"
             fontFamily='"Playfair Display",serif'
+            color="black !important"
           >
             Winter
             <br />
@@ -64,10 +64,12 @@ const Hero = () => {
           >
             Best Cloth Collection By 2020!
           </Text>
-          <ButtonGroup size="lg" spacing="3" mt="5">
-            <Button colorScheme="messenger">Shop Now</Button>
-            <Button colorScheme="pink">Latest Products</Button>
-          </ButtonGroup>
+          <LightMode>
+            <ButtonGroup size="lg" spacing="3" mt="5">
+              <Button colorScheme="messenger">Shop Now</Button>
+              <Button colorScheme="pink">Latest Products</Button>
+            </ButtonGroup>
+          </LightMode>
         </Slide>
       </GridItem>
     </Grid>

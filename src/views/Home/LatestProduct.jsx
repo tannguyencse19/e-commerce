@@ -26,7 +26,7 @@ const LatestProduct = () => {
   //https://stackoverflow.com/questions/58252454/react-hooks-using-usestate-vs-just-variables
 
   return (
-    <Box px={{base: "5", md: "10"}} py={16}>
+    <Box px={{base: "5", md: "10"}}>
       <Tabs isLazy>
         <Grid
           autoFlow={{ base: "row", lg: "column" }}

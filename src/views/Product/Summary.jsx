@@ -2,14 +2,18 @@ import { Image } from "@chakra-ui/image";
 import { Text, VStack } from "@chakra-ui/layout";
 import Rating from "../../utils/Rating";
 
-const ProductSummary = ({image, title, rating, price, isHover}) => {
+const ProductSummary = ({ image, title, rating, price, isHover }) => {
   return (
     <VStack
       spacing={3}
-      _hover={isHover ? {
-        transform: "scale(1.04)",
-        cursor: "pointer",
-      } : null}
+      _hover={
+        isHover
+          ? {
+              transform: "scale(1.04)",
+              cursor: "pointer",
+            }
+          : null
+      }
       transitionDuration="0.3s"
       align={{ base: "center", lg: "flex-start" }}
     >

@@ -31,7 +31,7 @@ const Category = [
 
 const ShopByCategory = () => {
   return (
-    <Box px={{base: "0", md:"10"}} py={{base: "16", md:"32"}}>
+    <Box px={{base: "0", md:"10"}}>
       <Text
         fontFamily='"Playfair Display",serif'
         fontSize={{base: "4xl", md:"5xl"}}

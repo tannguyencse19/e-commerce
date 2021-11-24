@@ -1,5 +1,4 @@
-import { Image } from "@chakra-ui/react";
-import { Grid, VStack, Text } from "@chakra-ui/layout";
+import { Image, Grid, VStack, Text } from "@chakra-ui/react";
 import Rating from "../../utils/Rating";
 import { Link as RouterLink } from "react-router-dom";
 
