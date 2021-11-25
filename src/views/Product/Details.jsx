@@ -22,7 +22,11 @@ import {
 import { useBreakpointValue } from "@chakra-ui/react";
 import ProductRelated from "./Related";
 import DividerHelper from "../../utils/DividerHelper";
-import { darkModeColor } from "../../utils/Helper";
+import {
+  darkModeBackgroundColor,
+  darkModeContainerColor,
+  lightModeContainerColor,
+} from "../../utils/Helper";
 
 const ProductDetails = ({
   match: {
@@ -51,15 +55,19 @@ const ProductDetails = ({
   const largerThanMd = useBreakpointValue({ base: false, md: true });
 
   return (
-    <VStack spacing="16" py="10">
+    <VStack py="10">
       <Stack
         direction={{ base: "column", xl: "row" }}
         justify="space-around"
         width="100%"
         p="10"
-        background={useColorModeValue("gray.100", darkModeColor)}
       >
-        <Box>
+        <Box
+          background={useColorModeValue(
+            lightModeContainerColor,
+            darkModeContainerColor
+          )}
+        >
           {RelatedProductsLoading && (
             <Skeleton width={{ base: "auto", md: "400px" }} height="300px" />
           )}
@@ -85,9 +93,17 @@ const ProductDetails = ({
             </Carousel>
           )}
         </Box>
-        <VStack align="flex-start" spacing="7">
+        <VStack
+          align="flex-start"
+          spacing="7"
+          background={useColorModeValue(
+            lightModeContainerColor,
+            darkModeContainerColor
+          )}
+          p="10"
+        >
           {ProductsLoading && (
-            <Box width={{ base: "100%", md: "auto" }}>
+            <Box width={{ base: "100%", md: "600px" }}>
               <Skeleton height="16" />
               <Skeleton height="8" width="40" mt="4" />
               <Skeleton height="8" width="16" mt="4" />
@@ -146,11 +162,7 @@ const ProductDetails = ({
 
       <DividerHelper />
 
-      <Box
-        width="100%"
-        mt="0"
-        background={useColorModeValue("gray.100", darkModeColor)}
-      >
+      <Box width="100%" mt="0">
         <ProductRelated />
       </Box>
     </VStack>

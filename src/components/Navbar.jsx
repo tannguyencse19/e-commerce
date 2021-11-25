@@ -13,7 +13,7 @@ import {
   DrawerCloseButton,
   useDisclosure,
   useColorMode,
-  Stack
+  Stack,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
@@ -101,6 +101,11 @@ const Navbar = () => {
         </Grid>
 
         <GridItem display={{ md: "none" }}>
+          <IconButton
+            onClick={toggleColorMode}
+            variant="ghost"
+            icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+          />
           <IconButton
             ref={btnRef}
             onClick={onOpen}

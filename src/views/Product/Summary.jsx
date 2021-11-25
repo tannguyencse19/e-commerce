@@ -1,5 +1,5 @@
-import { Image } from "@chakra-ui/image";
-import { Text, VStack } from "@chakra-ui/layout";
+import { Text, VStack, Image, useColorModeValue } from "@chakra-ui/react";
+import { darkModeContainerColor, lightModeContainerColor } from "../../utils/Helper";
 import Rating from "../../utils/Rating";
 
 const ProductSummary = ({ image, title, rating, price, isHover }) => {
@@ -16,6 +16,13 @@ const ProductSummary = ({ image, title, rating, price, isHover }) => {
       }
       transitionDuration="0.3s"
       align={{ base: "center", lg: "flex-start" }}
+      background={useColorModeValue(
+        lightModeContainerColor,
+        darkModeContainerColor
+      )}
+      px="5"
+      py="10"
+      h="95%"
     >
       <Image src={image} boxSize="200px" fit="contain" mx="auto" />
       <Text fontFamily='"Roboto",serif' fontSize="md" maxW="xs">
