@@ -10,10 +10,12 @@ import {
   Th,
   Td,
   Button,
+  useColorMode,
+  LightMode
 } from "@chakra-ui/react";
 import React from "react";
 import { useFormContext, useFormState } from "react-hook-form";
-import { sleepAwait } from "../../../utils/Helper";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const BillInfo = {
   products: [
@@ -40,17 +42,10 @@ const BillInfo = {
 
 const CheckoutBill = () => {
   const { control } = useFormContext();
-  const { isSubmitting } = useFormState({
+  const { isSubmitting, submitCount } = useFormState({
     control,
   });
-  const [preventSpam, setPreventSpam] = React.useState(false);
-
-  async function handleClick() {
-    await sleepAwait(2000);
-    setPreventSpam(true);
-    await sleepAwait(2000);
-    setPreventSpam(false);
-  }
+  const { colorMode } = useColorMode();
 
   return (
     <Stack>
@@ -95,15 +90,19 @@ const CheckoutBill = () => {
         </Tfoot>
       </Table>
 
-      <Button
-        type="submit"
-        colorScheme="orange"
-        isLoading={isSubmitting}
-        isDisabled={preventSpam}
-        onClick={handleClick}
-      >
-        Go to Payment
-      </Button>
+      <LightMode>
+        <Button type="submit" colorScheme="orange" isLoading={isSubmitting}>
+          Go to Payment
+        </Button>
+      </LightMode>
+
+      {submitCount && (
+        <ReCAPTCHA
+          sitekey="6LdXnlodAAAAABP36XI-yuACjPF3CEOQdU6FNyPa"
+          onChange={(value) => console.log(value)}
+          theme={colorMode}
+        />
+      )}
     </Stack>
   );
 };

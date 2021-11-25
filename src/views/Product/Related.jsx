@@ -30,6 +30,7 @@ const ProductRelated = () => {
           Related Products
         </Text>
       )}
+      
       <Stack
         width="100%"
         // style for mobile version

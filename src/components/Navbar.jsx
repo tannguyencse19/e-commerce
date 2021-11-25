@@ -13,6 +13,7 @@ import {
   DrawerCloseButton,
   useDisclosure,
   useColorMode,
+  LightMode,
   Stack,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -94,9 +95,11 @@ const Navbar = () => {
             </NavLink>
           </GridItem>
           <GridItem>
-            <Button borderRadius="40px" colorScheme="blue">
-              Sign In
-            </Button>
+            <LightMode>
+              <Button borderRadius="40px" colorScheme="blue">
+                Sign In
+              </Button>
+            </LightMode>
           </GridItem>
         </Grid>
 

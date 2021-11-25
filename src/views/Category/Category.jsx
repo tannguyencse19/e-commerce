@@ -4,6 +4,7 @@ import Result from "./Result";
 import React from "react";
 import { Spinner } from "@chakra-ui/spinner";
 import useFetch from "../../utils/useFetch";
+import DividerHelper from "../../utils/DividerHelper";
 
 const Category = () => {
   const [Category, setCategory] = React.useState("");
@@ -26,19 +27,22 @@ const Category = () => {
   }, [Category]);
 
   return (
-    <Container maxW="container.xl" mt="10">
+    <Container maxW="container.xl" >
       <Grid
         autoFlow={{ base: "row", md: "column" }}
         gap="10"
         templateColumns={{ md: "25% auto" }}
       >
-        <GridItem>
+        <GridItem mt="10">
           <Filter
             onSelectCategory={(e) => setCategory(e.target.value)}
             onSearch={(e) => setSearchValue(e.target.value)}
           />
         </GridItem>
-        <GridItem>
+
+        <DividerHelper isHorizontal={false} />
+
+        <GridItem mt="10">
           {isError && <h1>Uh oh... There is something wrong</h1>}
           {isLoading && (
             <Spinner

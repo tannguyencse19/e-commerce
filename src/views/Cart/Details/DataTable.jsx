@@ -19,10 +19,16 @@ import {
   InputRightElement,
   InputGroup,
   Button,
+  useColorModeValue,
+  LightMode,
 } from "@chakra-ui/react";
 import useFetch from "../../../utils/useFetch";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
+import {
+  darkModeContainerColor,
+  lightModeContainerColor,
+} from "../../../utils/Helper";
 
 function isObjectEmpty(obj) {
   return (
@@ -52,7 +58,7 @@ const DataTable = () => {
 
   React.useEffect(() => {
     if (!isObjectEmpty(Cart) && AllProducts.length > 0) {
-      if (Cart.hasOwnProperty('products')) {
+      if (Cart.hasOwnProperty("products")) {
         if (Cart.products.length > 0) {
           const result = AllProducts.filter((item) =>
             Cart.products.some((el) => item.id === el.productId)
@@ -102,7 +108,13 @@ const DataTable = () => {
 
   return (
     <Stack direction="row" spacing="5">
-      <Table flexBasis="70%" bg="white">
+      <Table
+        flexBasis="70%"
+        background={useColorModeValue(
+          lightModeContainerColor,
+          darkModeContainerColor
+        )}
+      >
         <Thead>
           <Tr>
             <Th>Name</Th>
@@ -144,7 +156,14 @@ const DataTable = () => {
         </Tbody>
       </Table>
 
-      <Box flexBasis="30%" bg="white" p="5">
+      <Box
+        flexBasis="30%"
+        background={useColorModeValue(
+          lightModeContainerColor,
+          darkModeContainerColor
+        )}
+        p="5"
+      >
         <Stack spacing="3">
           <Text fontWeight="semibold" size="lg">
             Payment Information
@@ -191,20 +210,23 @@ const DataTable = () => {
               </Tbody>
             </Table>
           )}
-          <InputGroup>
-            <Input placeholder="Coupon (accept only one)" ref={couponInput} />
-            <InputRightElement width="16">
-              <Button colorScheme="teal" onClick={handleApplyCoupon}>
-                Apply
-              </Button>
-            </InputRightElement>
-          </InputGroup>
-          <Text>Coupon: 123</Text>
-          <RouterLink to="/checkout">
-            <Button colorScheme="orange">
-              Checkout
-            </Button>
-          </RouterLink>
+
+          <LightMode>
+            <InputGroup>
+              <Input placeholder="Coupon (accept only one)" ref={couponInput} />
+              <InputRightElement width="16">
+                <Button colorScheme="teal" onClick={handleApplyCoupon}>
+                  Apply
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+
+            <Text>Coupon: 123</Text>
+
+            <RouterLink to="/checkout">
+              <Button colorScheme="orange">Checkout</Button>
+            </RouterLink>
+          </LightMode>
         </Stack>
       </Box>
     </Stack>
