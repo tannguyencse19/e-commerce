@@ -17,6 +17,10 @@ code {
   box-shadow: none !important;
 }
 
+html, body, #root, #app {
+  height: 100%
+}
+
 
 
 

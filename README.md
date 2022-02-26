@@ -11,40 +11,35 @@
 
 - Ranking: Hover hiện lên modal giống amazon
 
-1. Maintain
-
-- Refactor Bill component (Checkout, Payment)
-- Loading UI:
-
-  - Loading chuyển trang
-  - Loading component
-    - Progress bar
+1. ĐANG LÀM
 
 - Navbar Dropdown
-- Footer
-- Default Scrollbar
+- Fixed Navbar: Còn thiếu hiệu ứng
+
+2. Maintain
+
+- Refactor Bill component (Checkout, Payment)
+- Dark mode
+- Recaptcha
+- Loading UI:
+  - Loading chuyển trang (lazy loading)
+  - Loading component
+
+3. Chưa làm xong
+
 - Modal
+
   - Buy now/Add to cart
   - Redirect CheckoutForm -> Stripe
-- Responsive
 
-2. Chưa làm xong
-
-- Dark mode: https://chakra-ui.com/docs/features/color-mode --> Lỗi background white/gray trong dark mode
-  - Fixed Home view
-  - Fixed ProductDetails
-
-- Recaptcha: Chưa chạy
-
-- Fixed Navbar
-
-- Latest Product:
-
-  - Mobile:
+- Footer
+- Default Scrollbar
+- Latest Product
+  - Mobile
     - Carousel Drag and drop chứ ko phải click: Nghiên cứu framework (nhẹ: Swiper, mạnh framer-motion)
     - Hoặc Fade
 
-3. Bug
+4. Bug
 
 - Transform scale glitch mờ ảnh
 - Drawer: Mobile bị bug

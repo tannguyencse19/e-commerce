@@ -13,8 +13,10 @@ import {
   DrawerCloseButton,
   useDisclosure,
   useColorMode,
+  useColorModeValue,
   LightMode,
   Stack,
+  Slide,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
@@ -23,6 +25,7 @@ import BadgeButton from "../utils/BadgeButton";
 import * as React from "react";
 import { HamburgerIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import DividerHelper from "../utils/DividerHelper";
+import { darkModeBackgroundColor } from "../utils/Helper";
 
 const NavMenu = [
   { name: "Home", path: "/" },
@@ -36,13 +39,22 @@ const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const { colorMode, toggleColorMode } = useColorMode();
+  const [IsScroll, setIsScroll] = React.useState(false);
+
+  window.addEventListener("scroll", () => {
+    setIsScroll(window.scrollY >= 68 ? true : false); // Neu chinh xac thi thay 60 = height cua navbar
+  });
 
   return (
-    <Stack>
+    <Stack
+      pos={IsScroll ? "fixed" : "initial"}
+      zIndex="9999"
+      background={useColorModeValue("white", darkModeBackgroundColor)}
+      w="100%"
+    >
       <Grid
         autoFlow="column dense"
         justifyContent="space-between"
-        // pos="fixed"
         w="100%"
         py="5"
         px="10"
